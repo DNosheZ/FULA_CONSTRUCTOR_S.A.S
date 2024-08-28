@@ -11,6 +11,7 @@ package com.mycompany.fula_constructor_s.a.s;
 public class FULA_CONSTRUCTOR_SAS {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        frontInformes form1 = new frontInformes();
+        form1.setVisible(true);
     }
 }

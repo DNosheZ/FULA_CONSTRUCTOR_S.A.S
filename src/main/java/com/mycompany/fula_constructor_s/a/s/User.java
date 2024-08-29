@@ -4,17 +4,56 @@
  */
 package com.mycompany.fula_constructor_s.a.s;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.io.*;
+
 /**
  *
  * @author Windows
  */
-public class User {
+public final class User {
     String userId;
     String userPassword;
+    public Map<String, String> registros = new HashMap<>();
+    
 
     public User(String userId, String userPassword) {
         this.userId = userId;
         this.userPassword = userPassword;
+    }
+
+    public User() {
+    }
+    
+    public void registrar(){
+        Map<String, String> registros = new HashMap<>();
+
+        String fileName = "users.txt";
+        
+        try(BufferedReader br = new BufferedReader(new FileReader(fileName))){
+            String line;
+            
+            while((line = br.readLine()) != null){
+                String[] parts = line.split(";");
+                registros.put(parts[0], parts[1]);
+            }
+        }catch(IOException e){
+            
+        }
+        
+        this.setRegistros(registros);
+        
+    }
+
+    public Map<String, String> getRegistros() {
+        registrar();
+        return registros;
+    }
+
+    public void setRegistros(Map<String, String> registros) {
+        
+        this.registros = registros;
     }
 
 

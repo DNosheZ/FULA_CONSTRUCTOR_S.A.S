@@ -8,19 +8,20 @@ package com.mycompany.fula_constructor_s.a.s;
  *
  * @author Windows
  */
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-public class front extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
 
+public class front extends javax.swing.JFrame {
     /**
      * Creates new form front
      */
     public front() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +37,7 @@ public class front extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUserId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtUserPassword = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,34 +60,26 @@ public class front extends javax.swing.JFrame {
 
         jLabel3.setText("Ingresa tu contraseña:");
 
-        txtUserPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserPasswordActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(bttnLogin)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(93, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(71, 71, 71))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtUserId)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(132, 132, 132))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtUserId)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPassword))
+                        .addGap(132, 132, 132))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(bttnLogin)
+                        .addGap(160, 160, 160))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,83 +93,54 @@ public class front extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(txtUserPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(bttnLogin)
-                .addGap(41, 41, 41))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bttnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnLoginActionPerformed
         // TODO add your handling code here:
-        private Map<String, String> registros = new HashMap<>();
 
-        public void cargarBaseDeDatos(String archivo) throws IOException {
-            BufferedReader reader = new BufferedReader(new FileReader(archivo));
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                String[] campos = linea.split(","); // Suponiendo que los campos están separados por comas
-                if (campos.length == 2) {
-                    registros.put(campos[0].trim(), campos[1].trim());
-                }
-            }
-            reader.close();
-        }
-
-        public boolean verificarCampos(String campo1, String campo2) {
-            return registros.containsKey(campo1) && registros.get(campo1).equals(campo2);
-        }
+        String userId = txtUserId.getText();
+        char[] userPasswordchar = txtPassword.getPassword();
+        String userPass = new String(userPasswordchar);
+        Map<String, String> registros = new HashMap<>();
         
-        try{
-            String userId= txtUserId.getText();
-            String userPassword=txtUserPassword.getPassword().toString();
-            String userInfo;
+        User users = new User();
 
-            File file = new File("C:\\Users\\Windows\\Documents\\NetBeansProjects\\FULA_CONSTRUCTOR_S.A.S\\src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\users.txt");
-
-            if (!file.exists()) {
-
-                // Create a new file if not exists.
-                file.createNewFile();
-            }
-
-            RandomAccessFile raf = new RandomAccessFile(file, "rw");
-            boolean found = false;
-
-            // Checking whether the name
-            // of contact already exists.
-            // getFilePointer() give the current offset
-            // value from start of the file.
-            while (raf.getFilePointer() < raf.length()) {
-                // reading line from the file.
-                userInfo = raf.readLine();
-
-                // splitting the string to get name and
-                // number
-                String[] lineSplit = userInfo.split(";");
-                
-                User user=new User(lineSplit[0],lineSplit[1]);
-                //como sé si el usuario ingresado es el admin o uno de los secretarios
-                if(){
-                
+        registros = users.getRegistros();
+        
+        System.out.println(registros);
+        
+        if (registros.containsKey(userId)) {
+            if (registros.get(userId).equals(userPass)) {
+                if (userId.equals("Admin01")) {
+                    AdminView admin = new AdminView(userId);
+                    admin.setVisible(true);
+                    this.hide();
+                }else{
+                    UsersView user = new UsersView(userId);
+                    user.setVisible(true);
+                    this.hide();
                 }
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
         }
-        catch (IOException ioe) {
-   
-            System.out.println(ioe);
-        }
+
     }//GEN-LAST:event_bttnLoginActionPerformed
 
     private void txtUserIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserIdActionPerformed
-
-    private void txtUserPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,7 +182,7 @@ public class front extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUserId;
-    private javax.swing.JPasswordField txtUserPassword;
     // End of variables declaration//GEN-END:variables
 }

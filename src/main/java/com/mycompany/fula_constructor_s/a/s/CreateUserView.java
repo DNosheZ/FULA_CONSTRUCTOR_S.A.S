@@ -18,6 +18,7 @@ public class CreateUserView extends javax.swing.JFrame {
      */
     public CreateUserView() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**

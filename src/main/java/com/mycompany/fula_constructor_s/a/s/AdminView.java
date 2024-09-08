@@ -4,30 +4,39 @@
  */
 package com.mycompany.fula_constructor_s.a.s;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Windows
  */
 public class AdminView extends javax.swing.JFrame {
-    private String UserName;
-    /**
-     * Creates new form AdminView
-     */
+    
+    private ImageIcon image;
+    private Icon icon;
+    private String userName;
+    
     public AdminView() {
         initComponents();
     }
 
     public AdminView(String UserName) {
-        this.UserName = UserName;
+        this.userName = UserName;
         initComponents();
+        this.setResizable(false);
+        this.setLogo(imgLogo, "src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");
+        lblUserName.setText(UserName);
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String UserName) {
-        this.UserName = UserName;
+        this.userName = UserName;
     }
     
     
@@ -46,10 +55,14 @@ public class AdminView extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        paneControl = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        btnLogOut = new javax.swing.JButton();
+        lblUserName = new javax.swing.JLabel();
+        imgLogo = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuLogOut = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
 
@@ -61,12 +74,18 @@ public class AdminView extends javax.swing.JFrame {
 
         jLabel3.setText("901224360-7");
 
+        paneControl.setLayout(new java.awt.GridLayout(0, 3, 12, 0));
+
+        jButton3.setText("Buscar informes");
+        paneControl.add(jButton3);
+
         jButton1.setText("Informes por aprobar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        paneControl.add(jButton1);
 
         jButton2.setText("Crear usuarios");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -74,54 +93,52 @@ public class AdminView extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        paneControl.add(jButton2);
 
-        jButton3.setText("Buscar informes");
+        lblUserName.setText("User Name");
 
-        btnLogOut.setText("Cerrar sesion");
-        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+        menuLogOut.setText("Cerrar sesión");
+        menuLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogOutActionPerformed(evt);
+                menuLogOutActionPerformed(evt);
             }
         });
+        jMenuBar1.add(menuLogOut);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogOut))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
-                .addGap(30, 30, 30))
+                            .addComponent(lblUserName))
+                        .addGap(644, 644, 644)
+                        .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(btnLogOut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblUserName))
+                    .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(71, 71, 71)
+                .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,15 +153,15 @@ public class AdminView extends javax.swing.JFrame {
         // TODO add your handling code here:
         CreateUserView view = new CreateUserView();
         view.setVisible(true);
-        
+        this.hide();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+    private void menuLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogOutActionPerformed
         // TODO add your handling code here:
-        front main = new front();
-        main.setVisible(true);
+        front view = new front();
+        view.setVisible(true);
         this.hide();
-    }//GEN-LAST:event_btnLogOutActionPerformed
+    }//GEN-LAST:event_menuLogOutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,9 +198,16 @@ public class AdminView extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void setLogo(JLabel img,String root){
+        this.image = new ImageIcon(root);
+        this.icon = new ImageIcon(this.image.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH));
+        img.setIcon(this.icon);
+        //this.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogOut;
+    private javax.swing.JLabel imgLogo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -191,5 +215,9 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblUserName;
+    private javax.swing.JMenu menuLogOut;
+    private javax.swing.JPanel paneControl;
     // End of variables declaration//GEN-END:variables
 }

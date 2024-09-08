@@ -24,14 +24,22 @@ public class frontInformes extends javax.swing.JFrame {
 
     private ImageIcon image;
     private Icon icon;
+    private String userName;
     
-    public frontInformes() {
+    public frontInformes(String userName) {
         initComponents();
-        
+        this.userName = userName;
+        this.setResizable(false);
         this.setLogo(imgLogo, "src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");
         this.setInfo(lblToday);
         
     }
+
+    public frontInformes() {
+        initComponents();
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,6 +143,11 @@ public class frontInformes extends javax.swing.JFrame {
         jPanel1.add(jButton2);
 
         jMenu2.setText("Volver");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -272,6 +285,13 @@ public class frontInformes extends javax.swing.JFrame {
         paneActivitys.add(btnEv);
         paneActivitys.revalidate();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+        UsersView view = new UsersView(this.userName);
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     public void AddLine(String workDirection,String email,String responsableName,String socialReason,String FinishDateText,
             String StartDateText, String workId){

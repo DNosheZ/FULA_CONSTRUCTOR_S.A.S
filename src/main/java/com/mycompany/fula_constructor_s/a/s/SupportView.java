@@ -23,6 +23,7 @@ public class SupportView extends javax.swing.JFrame {
      */
     public SupportView() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**

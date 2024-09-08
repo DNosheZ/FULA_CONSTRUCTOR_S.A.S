@@ -156,6 +156,7 @@ public class UsersView extends javax.swing.JFrame {
         // TODO add your handling code here:
         frontInformes viewInformes = new frontInformes();
         viewInformes.setVisible(true);
+        this.hide();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

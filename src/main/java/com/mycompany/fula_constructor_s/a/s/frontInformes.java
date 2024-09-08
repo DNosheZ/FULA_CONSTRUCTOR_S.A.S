@@ -47,7 +47,7 @@ public class frontInformes extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         socialReasonTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        saveClientBttn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         responsableNameTxt = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -57,6 +57,7 @@ public class frontInformes extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         workIdTxt = new javax.swing.JTextField();
         chargeEvidencesBttn = new javax.swing.JButton();
+        loggOutBttn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,10 +81,10 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel5.setText("Dirección de obra:");
 
-        jButton1.setText("Guardar cliente");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveClientBttn.setText("Guardar cliente");
+        saveClientBttn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveClientBttnActionPerformed(evt);
             }
         });
 
@@ -100,6 +101,13 @@ public class frontInformes extends javax.swing.JFrame {
         chargeEvidencesBttn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chargeEvidencesBttnActionPerformed(evt);
+            }
+        });
+
+        loggOutBttn.setText("Volver");
+        loggOutBttn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loggOutBttnActionPerformed(evt);
             }
         });
 
@@ -145,7 +153,12 @@ public class frontInformes extends javax.swing.JFrame {
                                         .addGap(13, 13, 13)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(chargeEvidencesBttn)
-                                            .addComponent(jButton1))))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(saveClientBttn))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(loggOutBttn)))
                                 .addGap(76, 76, 76)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(dateStartWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,10 +206,12 @@ public class frontInformes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(35, 35, 35)
+                        .addGap(27, 27, 27)
                         .addComponent(chargeEvidencesBttn)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(saveClientBttn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(loggOutBttn))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
@@ -250,7 +265,7 @@ public class frontInformes extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void saveClientBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveClientBttnActionPerformed
         // TODO add your handling code here:
         String workDirection = workDirectionTxt.getText();
         String email = emailTxt.getText();
@@ -277,7 +292,7 @@ public class frontInformes extends javax.swing.JFrame {
         }
 
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_saveClientBttnActionPerformed
 
     private void chargeEvidencesBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chargeEvidencesBttnActionPerformed
         // TODO add your handling code here:
@@ -298,6 +313,13 @@ public class frontInformes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Imágenes seleccionadas correctamente.");
         }
     }//GEN-LAST:event_chargeEvidencesBttnActionPerformed
+
+    private void loggOutBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggOutBttnActionPerformed
+        // TODO add your handling code here:
+        UsersView view = new UsersView();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_loggOutBttnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,7 +361,6 @@ public class frontInformes extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateFinishWork;
     private com.toedter.calendar.JDateChooser dateStartWork;
     private javax.swing.JTextField emailTxt;
-    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -351,7 +372,9 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton loggOutBttn;
     private javax.swing.JTextField responsableNameTxt;
+    private javax.swing.JButton saveClientBttn;
     private javax.swing.JTextField socialReasonTxt;
     private javax.swing.JTextArea textAreaJustifyWork;
     private javax.swing.JTextField workDirectionTxt;

@@ -12,6 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import java.io.*;
+import javax.swing.JFileChooser;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class frontInformes extends javax.swing.JFrame {
 
     /**
@@ -50,6 +56,7 @@ public class frontInformes extends javax.swing.JFrame {
         workDirectionTxt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         workIdTxt = new javax.swing.JTextField();
+        chargeEvidencesBttn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +96,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel9.setText("Identificación (NIT/CC):");
 
+        chargeEvidencesBttn.setText("Cargar evidencias");
+        chargeEvidencesBttn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chargeEvidencesBttnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,17 +140,19 @@ public class frontInformes extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
+                                    .addComponent(jLabel3)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(13, 13, 13)
-                                        .addComponent(jButton1))
-                                    .addComponent(jLabel3))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(chargeEvidencesBttn)
+                                            .addComponent(jButton1))))
                                 .addGap(76, 76, 76)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(dateStartWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(dateFinishWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(responsableNameTxt)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +193,9 @@ public class frontInformes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(94, 94, 94)
+                        .addGap(35, 35, 35)
+                        .addComponent(chargeEvidencesBttn)
+                        .addGap(36, 36, 36)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
@@ -189,15 +207,47 @@ public class frontInformes extends javax.swing.JFrame {
     private void socialReasonTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_socialReasonTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_socialReasonTxtActionPerformed
+    private List<File> selectedImages = new ArrayList<>(); // Lista para guardar las imágenes seleccionadas
 
-    public void AddLine(String workDirection,String email,String responsableName,String socialReason,String FinishDateText,
-            String StartDateText, String workId){
-        try(FileWriter fw = new FileWriter("clients.txt",true)){
+    public void AddLine(String workDirection, String email, String responsableName, String socialReason, String FinishDateText,
+                    String StartDateText, String workId, String workJustification) {
+        String folderPath = "C:\\Users\\Windows\\Documents\\NetBeansProjects\\FULA_CONSTRUCTOR_S.A.S\\informes"; // Cambia esta ruta según tu carpeta
+
+        File folder = new File(folderPath);
+
+        // Verifica que la ruta sea una carpeta válida
+        if (!folder.exists() || !folder.isDirectory()) {
+            JOptionPane.showMessageDialog(this, "La carpeta especificada no existe o no es un directorio.");
+            return; // Termina la ejecución si la carpeta no es válida
+        }
+
+        // Define el nombre del archivo dentro de la carpeta existente
+        
+        LocalDate hoy = LocalDate.now();
+        
+        DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String filename = folderPath + "/Informe_" + responsableName + ".txt";
+        try (FileWriter fw = new FileWriter(filename, true)) {
             PrintWriter pw = new PrintWriter(fw);
-            pw.println(responsableName+";"+workId+";"+email+";"+socialReason+";"+workDirection + ";" + StartDateText+";"+
-                    FinishDateText);
-        }catch (IOException e){
-            
+
+            // Construir la cadena con las rutas de las imágenes seleccionadas
+            StringBuilder imagePaths = new StringBuilder();
+            for (File image : selectedImages) {
+                imagePaths.append(image.getAbsolutePath()).append(";");
+            }
+
+            // Si hay rutas de imágenes, eliminar el último separador ";"
+            if (imagePaths.length() > 0) {
+                imagePaths.setLength(imagePaths.length() - 1); // Quita el último ";"
+            }
+
+            // Escribir los datos en una sola línea junto con las rutas de las imágenes
+            pw.println(responsableName + ";" + workId + ";" + email + ";" + socialReason + ";" + workDirection + ";" + 
+                       StartDateText + ";" + FinishDateText + ";" + workJustification + ";" + imagePaths.toString());
+            JOptionPane.showMessageDialog(this, "Cliente y evidencias guardados correctamente.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos del cliente o las evidencias.");
+            e.printStackTrace();
         }
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -212,16 +262,42 @@ public class frontInformes extends javax.swing.JFrame {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Define el formato de la fecha
         String FinishDateText = dateFormat.format(selectedFinishDate);
         String StartDateText = dateFormat.format(selectedStartDate);
+        String workJustification=textAreaJustifyWork.getText();
         
         if (!workDirection.isEmpty() && !email.isEmpty() && !responsableName.isEmpty() && !socialReason.isEmpty()
-                && !FinishDateText.isEmpty() && !StartDateText.isEmpty() && !workId.isEmpty()) {
-            AddLine(workDirection,email,responsableName,socialReason,FinishDateText,StartDateText,workId);
-                JOptionPane.showMessageDialog(null, "Cliente creado correctamente");
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+             && !FinishDateText.isEmpty() && !StartDateText.isEmpty() && !workId.isEmpty() && !workJustification.isEmpty()) {
+            // Verificar si se han seleccionado imágenes antes de llamar a AddLine
+            if (selectedImages.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe cargar evidencias antes de guardar el cliente.");
+            } else {
+                AddLine(workDirection, email, responsableName, socialReason, FinishDateText, StartDateText, workId, workJustification);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos.");
         }
+
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void chargeEvidencesBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chargeEvidencesBttnActionPerformed
+        // TODO add your handling code here:
+        // Crear JFileChooser para seleccionar imágenes
+        JFileChooser getImage = new JFileChooser();
+        getImage.setMultiSelectionEnabled(true);
+        getImage.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes (jpg, jpeg, png, gif)", 
+                "jpg", "jpeg", "png", "gif"));
+
+        // Mostrar el diálogo de selección de archivos
+        if (getImage.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            // Guardar las imágenes seleccionadas en la lista
+            File[] images = getImage.getSelectedFiles();
+            selectedImages.clear(); // Limpiar la lista antes de agregar nuevas imágenes
+            for (File image : images) {
+                selectedImages.add(image);
+            }
+            JOptionPane.showMessageDialog(this, "Imágenes seleccionadas correctamente.");
+        }
+    }//GEN-LAST:event_chargeEvidencesBttnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +335,7 @@ public class frontInformes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chargeEvidencesBttn;
     private com.toedter.calendar.JDateChooser dateFinishWork;
     private com.toedter.calendar.JDateChooser dateStartWork;
     private javax.swing.JTextField emailTxt;

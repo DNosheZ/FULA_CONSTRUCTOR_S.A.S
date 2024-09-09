@@ -38,7 +38,8 @@ public class UsersView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        btnSupport = new javax.swing.JButton();
+        btnClientCreation = new javax.swing.JButton();
+        btnSupport1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,10 +75,17 @@ public class UsersView extends javax.swing.JFrame {
             }
         });
 
-        btnSupport.setText("Soporte");
-        btnSupport.addActionListener(new java.awt.event.ActionListener() {
+        btnClientCreation.setText("Registrar nuevo cliente");
+        btnClientCreation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSupportActionPerformed(evt);
+                btnClientCreationActionPerformed(evt);
+            }
+        });
+
+        btnSupport1.setText("Soporte");
+        btnSupport1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupport1ActionPerformed(evt);
             }
         });
 
@@ -98,12 +106,17 @@ public class UsersView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSupport, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSupport1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(76, 76, 76)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnClientCreation, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)))))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -120,9 +133,11 @@ public class UsersView extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btnSupport, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClientCreation, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSupport1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -145,12 +160,12 @@ public class UsersView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnSupportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupportActionPerformed
+    private void btnClientCreationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientCreationActionPerformed
         // TODO add your handling code here:
-        SupportView view = new SupportView();
-        view.setVisible(true);
+        ClientCreation viewClienteCreation = new ClientCreation();
+        viewClienteCreation.setVisible(true);
         this.hide();
-    }//GEN-LAST:event_btnSupportActionPerformed
+    }//GEN-LAST:event_btnClientCreationActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -158,6 +173,10 @@ public class UsersView extends javax.swing.JFrame {
         viewInformes.setVisible(true);
         this.hide();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnSupport1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupport1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSupport1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,8 +214,9 @@ public class UsersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClientCreation;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JButton btnSupport;
+    private javax.swing.JButton btnSupport1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

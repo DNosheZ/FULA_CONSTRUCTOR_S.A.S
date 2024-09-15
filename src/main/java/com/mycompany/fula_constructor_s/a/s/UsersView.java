@@ -9,6 +9,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+
 /**
  *
  * @author Windows
@@ -48,6 +49,7 @@ public class UsersView extends javax.swing.JFrame {
         btnNewInforme = new javax.swing.JButton();
         btnSearchInforme = new javax.swing.JButton();
         btnStateInforme = new javax.swing.JButton();
+        btnCreateClient = new javax.swing.JButton();
         btnSupport = new javax.swing.JButton();
         lblUserName = new javax.swing.JLabel();
         imgLogo = new javax.swing.JLabel();
@@ -96,6 +98,17 @@ public class UsersView extends javax.swing.JFrame {
             }
         });
         paneControl.add(btnStateInforme);
+
+        btnCreateClient.setBackground(new java.awt.Color(153, 0, 63));
+        btnCreateClient.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnCreateClient.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreateClient.setText("Crear cliente");
+        btnCreateClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateClientActionPerformed(evt);
+            }
+        });
+        paneControl.add(btnCreateClient);
 
         btnSupport.setBackground(new java.awt.Color(153, 0, 63));
         btnSupport.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -195,6 +208,10 @@ public class UsersView extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_menuLogOutMouseClicked
 
+    private void btnCreateClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateClientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCreateClientActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -238,6 +255,7 @@ public class UsersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateClient;
     private javax.swing.JButton btnNewInforme;
     private javax.swing.JButton btnSearchInforme;
     private javax.swing.JButton btnStateInforme;

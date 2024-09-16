@@ -20,11 +20,18 @@ public class UsersView extends javax.swing.JFrame {
     private Icon icon;
     private String userName;
     
+    /**
+     *
+     */
     public UsersView() {
         initComponents();
         this.setResizable(false);
     }
 
+    /**
+     *
+     * @param UserName
+     */
     public UsersView(String UserName) {
         this.userName = UserName;
         initComponents();

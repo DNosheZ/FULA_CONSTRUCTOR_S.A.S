@@ -19,10 +19,17 @@ public class AdminView extends javax.swing.JFrame {
     private Icon icon;
     private String userName;
     
+    /**
+     *
+     */
     public AdminView() {
         initComponents();
     }
 
+    /**
+     *
+     * @param UserName
+     */
     public AdminView(String UserName) {
         this.userName = UserName;
         initComponents();
@@ -31,10 +38,18 @@ public class AdminView extends javax.swing.JFrame {
         lblUserName.setText(UserName);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     *
+     * @param UserName
+     */
     public void setUserName(String UserName) {
         this.userName = UserName;
     }

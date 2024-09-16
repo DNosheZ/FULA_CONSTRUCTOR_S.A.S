@@ -14,8 +14,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 
+import javax.activation.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+/**
+ *
+ * @author RyZen 5 Pro
+ */
 public class SupportView extends javax.swing.JFrame {
 
     /**
@@ -130,25 +138,19 @@ public class SupportView extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_btnLogoutActionPerformed
     
+    /**
+     *
+     * @param asunto
+     * @param body
+     */
     public void sendMessage(String asunto, String body){
         LocalDate hoy = LocalDate.now();
         
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
-        String hoyff = hoy.format(format);
-        String filename = "mail" + hoy.format(format2) + ".txt";
         
-        try(FileWriter fw = new FileWriter(filename,true)){
-            PrintWriter pw = new PrintWriter(fw);
-            pw.println(hoyff);
-            pw.println();
-            pw.println(asunto);
-            pw.println();
-            pw.println(body);
-        }catch (IOException e){
-            
-        }
+        transfer_to_email("dfula@unal.edu.com", asunto + " " + hoy.format(format2) , body);
+        
     }
     
     private void txtSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSendActionPerformed
@@ -158,7 +160,6 @@ public class SupportView extends javax.swing.JFrame {
         
         sendMessage(asunto,body);
         
-        JOptionPane.showMessageDialog(null, "Se ha enviado su solicitud correctamente, espera a que soporte que se contacte contigo");
         UsersView view = new UsersView();
         view.setVisible(true);
         this.hide();
@@ -197,6 +198,40 @@ public class SupportView extends javax.swing.JFrame {
                 new SupportView().setVisible(true);
             }
         });
+    }
+    
+    public static void transfer_to_email(String correo, String asunto, String body){
+        String sendEmail = "dfula@unal.edu.co";
+        String password = "smvl nffc ugwt jsuc";
+        String message = body;
+        
+        Properties objectPEC = new Properties();
+        
+        objectPEC.put("mail.smtp.host", "smtp.gmail.com");
+        objectPEC.setProperty("mail.smtp.starttls.enable","true");
+        objectPEC.put("mail.smtp.port", "587");
+        objectPEC.setProperty("mail.smtp.port","587");
+        objectPEC.put("mail.smtp.user", sendEmail);
+        objectPEC.setProperty("mail.smtp.auth","true");
+        
+        Session sesion = Session.getDefaultInstance(objectPEC);
+        MimeMessage mail = new MimeMessage(sesion);
+        
+        try{
+            mail.setFrom(new InternetAddress(sendEmail));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            mail.setSubject(asunto);
+            mail.setText(message);
+            
+            Transport transport = sesion.getTransport("smtp");
+            transport.connect(sendEmail,password);
+            transport.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            transport.close();
+            
+            JOptionPane.showMessageDialog(null, "El correo se envio correctamente");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al enviar el correo");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

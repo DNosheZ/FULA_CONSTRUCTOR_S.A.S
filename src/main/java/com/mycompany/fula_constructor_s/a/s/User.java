@@ -15,17 +15,31 @@ import java.io.*;
 public final class User {
     String userId;
     String userPassword;
+
+    /**
+     *
+     */
     public Map<String, String> registros = new HashMap<>();
     
-
+    /**
+     *
+     * @param userId
+     * @param userPassword
+     */
     public User(String userId, String userPassword) {
         this.userId = userId;
         this.userPassword = userPassword;
     }
 
+    /**
+     *
+     */
     public User() {
     }
     
+    /**
+     *
+     */
     public void registrar(){
         Map<String, String> registros = new HashMap<>();
 
@@ -46,29 +60,52 @@ public final class User {
         
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<String, String> getRegistros() {
         registrar();
         return registros;
     }
 
+    /**
+     *
+     * @param registros
+     */
     public void setRegistros(Map<String, String> registros) {
         
         this.registros = registros;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     *
+     * @param userId
+     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserPassword() {
         return userPassword;
     }
 
+    /**
+     *
+     * @param userPassword
+     */
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }

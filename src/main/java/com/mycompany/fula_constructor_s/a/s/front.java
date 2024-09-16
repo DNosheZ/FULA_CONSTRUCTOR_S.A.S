@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author RyZen 5 Pro
+ */
 public class front extends javax.swing.JFrame {
     /**
      * Creates new form front

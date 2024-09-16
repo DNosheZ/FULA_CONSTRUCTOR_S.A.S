@@ -8,10 +8,6 @@ package com.mycompany.fula_constructor_s.a.s;
  *
  * @author Windows
  */
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;

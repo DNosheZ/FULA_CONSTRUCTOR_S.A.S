@@ -8,6 +8,13 @@ package com.mycompany.fula_constructor_s.a.s;
  *
  * @author Windows
  */
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -18,8 +25,10 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 /**
  *
@@ -88,9 +97,9 @@ public class frontInformes extends javax.swing.JFrame {
         paneScroll = new javax.swing.JScrollPane();
         paneActivitys = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnPreview = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPrint = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
@@ -147,14 +156,24 @@ public class frontInformes extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        jButton1.setText("Vista previa");
-        jPanel1.add(jButton1);
+        btnPreview.setText("Vista previa");
+        btnPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviewActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPreview);
 
         jButton3.setText("Enviar para aprobacion");
         jPanel1.add(jButton3);
 
-        jButton2.setText("Imprimir");
-        jPanel1.add(jButton2);
+        btnPrint.setText("Imprimir");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPrint);
 
         jMenu2.setText("Volver");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -310,6 +329,16 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jMenu2MouseClicked
 
+    private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnPreviewActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+        this.imprimir();
+    }//GEN-LAST:event_btnPrintActionPerformed
+
     /**
      *
      * @param workDirection
@@ -328,6 +357,113 @@ public class frontInformes extends javax.swing.JFrame {
                     FinishDateText);
         }catch (IOException e){
             
+        }
+    }
+    
+    public void imprimir() {
+        // Usar JFileChooser para que el usuario elija la ruta
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar PDF como...");
+        
+        // Mostrar el cuadro de diálogo de guardar
+        int userSelection = fileChooser.showSaveDialog(null);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String dest = fileToSave.getAbsolutePath();
+
+            // Asegurarse de que el archivo tenga la extensión .pdf
+            if (!dest.toLowerCase().endsWith(".pdf")) {
+                dest += ".pdf";
+            }
+
+            // Crear el documento
+            Document document = new Document();
+            try {
+                // Crear un PdfWriter para escribir el archivo
+                PdfWriter.getInstance(document, new FileOutputStream(dest));
+
+                // Abrir el documento
+                document.open();
+
+                // Crear una tabla con 3 columnas
+                PdfPTable table = new PdfPTable(3);
+                table.setWidthPercentage(100); // Ancho de la tabla
+                table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
+
+                // Primera fila del encabezado (imagen y texto)
+                // Insertar una imagen
+                com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
+                logo.scaleToFit(100, 50);
+                PdfPCell cell1 = new PdfPCell(logo);
+                cell1.setBorder(PdfPCell.BOX);
+                cell1.setHorizontalAlignment(Element.ALIGN_CENTER); // Centrar la imagen en la celda
+                cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell1);
+
+                // Celda de texto del título
+                PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA"));
+                cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell2.setBorder(PdfPCell.BOX);
+                table.addCell(cell2);
+
+                // Crear una tabla interna para cell3
+                PdfPTable innerTable = new PdfPTable(1);
+                innerTable.setWidthPercentage(100);
+
+                // Celda para la fecha
+                PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024"));
+                fechaCell.setBorder(PdfPCell.BOX);  // Añadir borde
+                fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                innerTable.addCell(fechaCell);
+
+                // Celda para la versión
+                PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN"));
+                versionLabelCell.setBorder(PdfPCell.BOX);  // Añadir borde
+                versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                innerTable.addCell(versionLabelCell);
+
+                // Celda para el número de versión
+                PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1"));
+                versionNumberCell.setBorder(PdfPCell.BOX);  // Añadir borde
+                versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                innerTable.addCell(versionNumberCell);
+
+                // Añadir la tabla interna a cell3
+                PdfPCell cell3 = new PdfPCell(innerTable);
+                cell3.setBorder(PdfPCell.NO_BORDER);
+                table.addCell(cell3);
+
+                // Segunda fila
+                table.addCell(new PdfPCell(new Paragraph("ORDEN DE OBRA No")));
+                table.addCell(new PdfPCell(new Paragraph("084-183")));
+                PdfPCell fechaInicio = new PdfPCell();
+                fechaInicio.addElement(new Paragraph("FECHA INICIO:"));
+                fechaInicio.addElement(new Paragraph("22/05/2024"));
+                table.addCell(fechaInicio);
+
+                // Tercera fila
+                table.addCell(new PdfPCell(new Paragraph("UBICACIÓN")));
+                table.addCell(new PdfPCell(new Paragraph("")));
+                PdfPCell fechaFinal = new PdfPCell();
+                fechaFinal.addElement(new Paragraph("FECHA FINAL:"));
+                fechaFinal.addElement(new Paragraph("22/05/2024"));
+                table.addCell(fechaFinal);
+
+                // Añadir la tabla al documento
+                document.add(table);
+
+            } catch (DocumentException | IOException e) {
+                e.printStackTrace();
+            } finally {
+                // Cerrar el documento
+                document.close();
+            }
+
+            System.out.println("PDF creado exitosamente en: " + dest);
+        } else {
+            System.out.println("La acción de guardado fue cancelada por el usuario.");
         }
     }
     /**
@@ -392,11 +528,11 @@ public class frontInformes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnPreview;
+    private javax.swing.JButton btnPrint;
     private com.toedter.calendar.JDateChooser dateStartWork;
     private com.toedter.calendar.JDateChooser dateStartWork1;
     private javax.swing.JLabel imgLogo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;

@@ -12,6 +12,7 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -54,6 +55,12 @@ public class CreatePDFExample {
                 PdfPTable table = new PdfPTable(3);
                 table.setWidthPercentage(100); // Ancho de la tabla
                 table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
+                
+                // Definir estilos de fuente
+                Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
+                Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
+                Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
+
 
                 // Primera fila del encabezado (imagen y texto)
                 // Insertar una imagen
@@ -67,7 +74,7 @@ public class CreatePDFExample {
                 table.addCell(cell1);
 
                 // Celda de texto del título
-                PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA"));
+                PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA", titleFont));
                 cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell2.setBorder(PdfPCell.BOX);
@@ -79,19 +86,19 @@ public class CreatePDFExample {
                 innerTable.setWidthPercentage(100);
 
                 // Celda para la fecha
-                PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024"));
+                PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024",normalBoldFont));
                 fechaCell.setBorder(PdfPCell.BOX);  // Añadir borde
                 fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 innerTable.addCell(fechaCell);
 
                 // Celda para la versión
-                PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN"));
+                PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN",normalBoldFont));
                 versionLabelCell.setBorder(PdfPCell.BOX);  // Añadir borde
                 versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 innerTable.addCell(versionLabelCell);
 
                 // Celda para el número de versión
-                PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1"));
+                PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1",normalBoldFont));
                 versionNumberCell.setBorder(PdfPCell.BOX);  // Añadir borde
                 versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 innerTable.addCell(versionNumberCell);
@@ -103,12 +110,67 @@ public class CreatePDFExample {
                 table.addCell(cell3);
 
                 // Segunda fila
-                table.addCell(new PdfPCell(new Paragraph("ORDEN DE OBRA No")));
-                table.addCell(new PdfPCell(new Paragraph("084-183")));
-                PdfPCell fechaInicio = new PdfPCell();
-                fechaInicio.addElement(new Paragraph("FECHA INICIO:"));
-                fechaInicio.addElement(new Paragraph("22/05/2024"));
-                table.addCell(fechaInicio);
+                // Crear una tabla interna para cell4
+                PdfPTable innerTable2 = new PdfPTable(1);
+                
+                PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
+                innerTable2.addCell(number);
+                
+                PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+                innerTable2.addCell(ubic);
+                
+                // Añadir la tabla interna a cell4
+                PdfPCell cell4 = new PdfPCell(innerTable2);
+                cell4.setBorder(PdfPCell.NO_BORDER);
+                cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                table.addCell(cell4);
+                
+                // Crear una tabla interna para cell5
+                PdfPTable innerTable3 = new PdfPTable(1);
+                
+                PdfPCell numberO = new PdfPCell(new Paragraph("084-134", normalFont));
+                innerTable3.addCell(numberO);
+                
+                PdfPCell ubicO = new PdfPCell(new Paragraph("", normalFont));
+                innerTable3.addCell(ubicO);
+                
+                // Añadir la tabla interna a cell5
+                PdfPCell cell5 = new PdfPCell(innerTable3);
+                cell5.setBorder(PdfPCell.NO_BORDER);
+                table.addCell(cell5);
+                
+                // Crear una tabla interna para cell6
+                PdfPTable innerTable4 = new PdfPTable(1);
+                
+                PdfPTable innerTable41 = new PdfPTable(2);
+                PdfPCell fechai = new PdfPCell(new Paragraph("FECHA INICIO:", normalBoldFont ));
+                fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                innerTable41.addCell(fechai);
+                
+                PdfPCell fechaiO = new PdfPCell(new Paragraph("22/05/2024", normalFont ));
+                innerTable41.addCell(fechaiO);
+                
+                PdfPCell cellfecha = new PdfPCell(innerTable41);
+                cellfecha.setBorder(PdfPCell.NO_BORDER);
+                innerTable4.addCell(cellfecha);
+                                
+                PdfPTable innerTable42 = new PdfPTable(2);
+                PdfPCell fechaf = new PdfPCell(new Paragraph("FECHA FINAL:", normalBoldFont ));
+                fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                innerTable42.addCell(fechaf);
+                
+                PdfPCell fechafO = new PdfPCell(new Paragraph("22/05/2024", normalFont ));
+                innerTable42.addCell(fechafO);
+                
+                PdfPCell cellfechaf = new PdfPCell(innerTable42);
+                cellfechaf.setBorder(PdfPCell.NO_BORDER);
+                innerTable4.addCell(cellfechaf);
+                
+                // Añadir la tabla interna a cell6
+                PdfPCell cell6 = new PdfPCell(innerTable4);
+                cell6.setBorder(PdfPCell.NO_BORDER);
+                table.addCell(cell6);
+                
 
                 // Tercera fila
                 table.addCell(new PdfPCell(new Paragraph("UBICACIÓN")));

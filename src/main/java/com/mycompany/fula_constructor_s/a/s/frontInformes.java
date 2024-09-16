@@ -316,10 +316,30 @@ public class frontInformes extends javax.swing.JFrame {
         txtDescA.setText("");
         JButton btnEv = new JButton();
         btnEv.setText("Agregar evidencias");
-        
+           
+        // Añadir ActionListener al botón para abrir el JFileChooser
+        btnEv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Seleccionar imagen");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+                // Filtro para mostrar solo archivos de imagen
+                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Imágenes", "jpg", "png", "jpeg", "gif"));
+
+                int userSelection = fileChooser.showOpenDialog(null);
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    selectedFile.getAbsolutePath();
+                    
+                    //este path se agrega a la cadena que empezo cuando 
+                }
+            }
+        });
         paneActivitys.add(activity);
         paneActivitys.add(btnEv);
         paneActivitys.revalidate();
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked

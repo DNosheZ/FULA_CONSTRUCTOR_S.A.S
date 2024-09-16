@@ -18,6 +18,7 @@ public class CreateUserView extends javax.swing.JFrame {
      */
     public CreateUserView() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**
@@ -115,6 +116,11 @@ public class CreateUserView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
+    /**
+     *
+     * @param userName
+     * @param password
+     */
     public void AddLine(String userName,String password){
         try(FileWriter fw = new FileWriter("users.txt",true)){
             PrintWriter pw = new PrintWriter(fw);

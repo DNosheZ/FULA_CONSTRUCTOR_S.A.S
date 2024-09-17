@@ -192,6 +192,8 @@ public class CreatePDFExample {
                 cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table2.addCell(cell9);
 
+                document.add(table2);
+
                 PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
                 cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell10);

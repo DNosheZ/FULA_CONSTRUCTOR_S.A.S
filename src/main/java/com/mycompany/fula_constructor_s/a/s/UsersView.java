@@ -123,7 +123,7 @@ public class UsersView extends javax.swing.JFrame {
         btnSupport.setText("Soporte");
         btnSupport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSupport1ActionPerformed(evt);
+                actionPerformed(evt);
             }
         });
         paneControl.add(btnSupport);

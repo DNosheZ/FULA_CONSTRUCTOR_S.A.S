@@ -26,20 +26,40 @@ import java.io.IOException;
 
 public class CreatePDFExample {
 
-    public static void selectImage(){
+    public static void selectImage(Document document){
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Buscar evidencias");
+        fileChooser.setMultiSelectionEnabled(true);
+        fileChooser.setDialogTitle("Seleccionar Imágenes");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Imagen", "jpg", "png", "jpeg"));
 
         int userSelection = fileChooser.showOpenDialog(null);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFiles();
+            File[] selectedFiles = fileChooser.getSelectedFiles();
 
-            String [] filePaths;
-            filePaths = file.getAbsolutePath();
-        
+            // Agregar las imágenes seleccionadas al grid
+            for (File file : selectedFiles) {
+                // Cargar una imagen
+                Image img = Image.getInstance(file.getAbsolutePath());
+                img.scaleToFit(100, 100); // Ajustar el tamaño de la imagen
 
-            System.out.println(filePaths);
+                // Crear una celda para la imagen
+                PdfPCell cell = new PdfPCell(img, true);
+                cell.setPadding(5);
+                table.addCell(cell);
+            }
+
+            // Completar las celdas vacías si el número de imágenes no llena el grid
+            int totalCells = 9; // 3 columnas x 3 filas
+            int emptyCells = totalCells - selectedFiles.length;
+            for (int i = 0; i < emptyCells; i++) {
+                table.addCell(new PdfPCell()); // Agregar celdas vacías
+            }
+
+            // Añadir la tabla al documento
+            document.add(table);
+        } else {
+            System.out.println("No se seleccionaron imágenes.");
         }
     }
 

@@ -20,13 +20,15 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CreatePDFExample {
 
-    public static void selectImage(Document document){
+    // seleccionar imágenes y agregarlas al documento
+    public static void selectImage(Document document) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
         fileChooser.setDialogTitle("Seleccionar Imágenes");
@@ -37,216 +39,214 @@ public class CreatePDFExample {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
 
-            // Agregar las imágenes seleccionadas al grid
+            // Crear una tabla de 3 columnas para las imágenes (independiente de cuántas imágenes se seleccionen)
+            PdfPTable imageTable = new PdfPTable(3);
+            imageTable.setWidthPercentage(100); // Ajustar el ancho de la tabla
+            try {
+                imageTable.setWidths(new float[]{1, 1, 1});  // Definir los anchos de las columnas
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+
+            // Agregar las imágenes seleccionadas a la tabla
             for (File file : selectedFiles) {
-                // Cargar una imagen
-                Image img = Image.getInstance(file.getAbsolutePath());
-                img.scaleToFit(100, 100); // Ajustar el tamaño de la imagen
+                try {
+                    Image img = Image.getInstance(file.getAbsolutePath());
+                    img.scaleToFit(100, 100); // Ajustar el tamaño de la imagen
 
-                // Crear una celda para la imagen
-                PdfPCell cell = new PdfPCell(img, true);
-                cell.setPadding(5);
-                table.addCell(cell);
+                    PdfPCell imageCell = new PdfPCell(img, true);
+                    imageCell.setPadding(5);
+                    imageCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    imageCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    imageTable.addCell(imageCell);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
-            // Completar las celdas vacías si el número de imágenes no llena el grid
-            int totalCells = 9; // 3 columnas x 3 filas
-            int emptyCells = totalCells - selectedFiles.length;
-            for (int i = 0; i < emptyCells; i++) {
-                table.addCell(new PdfPCell()); // Agregar celdas vacías
+            // Si el número de imágenes seleccionadas no llena todas las columnas, agregar celdas vacías
+            int remainingCells = (3 - (selectedFiles.length % 3)) % 3;
+            if (remainingCells != 0) {  // Solo añadir celdas vacías si es necesario
+                for (int i = 0; i < remainingCells; i++) {
+                    imageTable.addCell(new PdfPCell());
+                }
             }
 
-            // Añadir la tabla al documento
-            document.add(table);
+            try {
+                document.add(imageTable);  // Agregar la tabla de imágenes al documento
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("No se seleccionaron imágenes.");
         }
     }
 
-    public static void main(String[] args) {
-        selectImage();
-        
-        // Usar JFileChooser para que el usuario elija la ruta
+    // seleccionar la ubicación y nombre del archivo PDF
+    public static File selectSaveLocation() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar PDF como...");
-        
-        // Mostrar el cuadro de diálogo de guardar
+        fileChooser.setDialogTitle("Guardar PDF");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo PDF", "pdf"));
+        fileChooser.setSelectedFile(new File("informe_con_imagenes.pdf")); // Nombre por defecto
+
         int userSelection = fileChooser.showSaveDialog(null);
-        
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
+            return fileChooser.getSelectedFile();
+        } else {
+            System.out.println("No se seleccionó ninguna ubicación para guardar el archivo.");
+            return null;
+        }
+    }
 
-            String dest = fileToSave.getAbsolutePath();
+    public static void main(String[] args) {
+        File file = selectSaveLocation();
+        if (file == null) {
+            return;  // Salir si no se seleccionó ubicación para guardar el archivo
+        }
 
-            // Asegurarse de que el archivo tenga la extensión .pdf
-            if (!dest.toLowerCase().endsWith(".pdf")) {
-                dest += ".pdf";
-            }
-
+        try {
             // Crear el documento
             Document document = new Document();
-            try {
-                // Crear un PdfWriter para escribir el archivo
-                PdfWriter.getInstance(document, new FileOutputStream(dest));
 
-                // Abrir el documento
-                document.open();
+            // Crear el PdfWriter con la ubicación seleccionada
+            PdfWriter.getInstance(document, new FileOutputStream(file));
 
-                // Crear una tabla con 3 columnas
-                PdfPTable table = new PdfPTable(3);
-                table.setWidthPercentage(100); // Ancho de la tabla
-                table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
-                
-                // Definir estilos de fuente
-                Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
-                Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
-                Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
-                
+            // Abrir el documento
+            document.open();
 
-                Image logo = Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
-                logo.scaleToFit(100, 50);
-                PdfPCell cell1 = new PdfPCell(logo);
-                cell1.setBorder(PdfPCell.BOX);
-                cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                cell1.setHorizontalAlignment(Element.ALIGN_CENTER); // Centrar la imagen en la celda
-                cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                table.addCell(cell1);
+            // Crear una tabla con 3 columnas
+            PdfPTable table = new PdfPTable(3);
+            table.setWidthPercentage(100); // Ancho de la tabla
+            table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
 
-                // Celda de texto del título
-                PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA", titleFont));
-                cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                cell2.setBorder(PdfPCell.BOX);
-                cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                table.addCell(cell2);
+            // Definir estilos de fuente
+            Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
+            Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
+            Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
 
-                // Crear una tabla interna para cell3
-                PdfPTable innerTable = new PdfPTable(1);
-                innerTable.setWidthPercentage(100);
+            // Imagen del logo
+            Image logo = Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
+            logo.scaleToFit(100, 50);
+            PdfPCell cell1 = new PdfPCell(logo);
+            cell1.setBorder(PdfPCell.BOX);
+            cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell1.setHorizontalAlignment(Element.ALIGN_CENTER);  // Centrar la imagen en la celda
+            cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(cell1);
 
-                // Celda para la fecha
-                PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024",normalBoldFont));
-                fechaCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(fechaCell);
+            // Celda de texto del título
+            PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA", titleFont));
+            cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setBorder(PdfPCell.BOX);
+            cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell2);
 
-                // Celda para la versión
-                PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN",normalBoldFont));
-                versionLabelCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(versionLabelCell);
+            // Crear una tabla interna para la celda 3
+            PdfPTable innerTable = new PdfPTable(1);
+            innerTable.setWidthPercentage(100);
 
-                // Celda para el número de versión
-                PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1",normalBoldFont));
-                versionNumberCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(versionNumberCell);
+            // Celda para la fecha
+            PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024", normalBoldFont));
+            fechaCell.setBorder(PdfPCell.BOX);
+            fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(fechaCell);
 
-                // Añadir la tabla interna a cell3
-                PdfPCell cell3 = new PdfPCell(innerTable);
-                cell3.setBorder(PdfPCell.NO_BORDER);
-                cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                table.addCell(cell3);
+            // Celda para la versión
+            PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN", normalBoldFont));
+            versionLabelCell.setBorder(PdfPCell.BOX);
+            versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(versionLabelCell);
 
-                // Segunda fila
-                // Crear una tabla interna para cell4
-                PdfPTable innerTable2 = new PdfPTable(1);
-                
-                PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
-                innerTable2.addCell(number);
-                
-                PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
-                innerTable2.addCell(ubic);
-                
-                // Añadir la tabla interna a cell4
-                PdfPCell cell4 = new PdfPCell(innerTable2);
-                cell4.setBorder(PdfPCell.NO_BORDER);
-                cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                table.addCell(cell4);
-                
-                // Crear una tabla interna para cell5
-                PdfPTable innerTable3 = new PdfPTable(1);
-                
-                PdfPCell numberO = new PdfPCell(new Paragraph("084-134", normalFont));
-                innerTable3.addCell(numberO);
-                
-                PdfPCell ubicO = new PdfPCell(new Paragraph("", normalFont));
-                innerTable3.addCell(ubicO);
-                
-                // Añadir la tabla interna a cell5
-                PdfPCell cell5 = new PdfPCell(innerTable3);
-                cell5.setBorder(PdfPCell.NO_BORDER);
-                table.addCell(cell5);
-                
-                // Crear una tabla interna para cell6
-                PdfPTable innerTable4 = new PdfPTable(1);
-                
-                PdfPTable innerTable41 = new PdfPTable(2);
-                PdfPCell fechai = new PdfPCell(new Paragraph("FECHA INICIO:", normalBoldFont ));
-                fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                innerTable41.addCell(fechai);
-                
-                PdfPCell fechaiO = new PdfPCell(new Paragraph("22/05/2024", normalFont ));
-                innerTable41.addCell(fechaiO);
-                
-                PdfPCell cellfecha = new PdfPCell(innerTable41);
-                cellfecha.setBorder(PdfPCell.NO_BORDER);
-                innerTable4.addCell(cellfecha);
-                                
-                PdfPTable innerTable42 = new PdfPTable(2);
-                PdfPCell fechaf = new PdfPCell(new Paragraph("FECHA FINAL:", normalBoldFont ));
-                fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                innerTable42.addCell(fechaf);
-                
-                PdfPCell fechafO = new PdfPCell(new Paragraph("22/05/2024", normalFont ));
-                innerTable42.addCell(fechafO);
-                
-                PdfPCell cellfechaf = new PdfPCell(innerTable42);
-                cellfechaf.setBorder(PdfPCell.NO_BORDER);
-                innerTable4.addCell(cellfechaf);
-                
-                // Añadir la tabla interna a cell6
-                PdfPCell cell6 = new PdfPCell(innerTable4);
-                cell6.setBorder(PdfPCell.NO_BORDER);
-                table.addCell(cell6);
-                
-                // Añadir la tabla al documento
-                document.add(table);
+            // Celda para el número de versión
+            PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1", normalBoldFont));
+            versionNumberCell.setBorder(PdfPCell.BOX);
+            versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(versionNumberCell);
 
-                // Tercera fila
-                // Crear una tabla con 2 columnas
-                PdfPTable table2 = new PdfPTable(2);
-                table2.setWidthPercentage(100); // Ancho de la tabla
-                table2.setWidths(new float[]{1, 2}); // Definir el ancho de las columnas
+            // Añadir la tabla interna a la celda 3
+            PdfPCell cell3 = new PdfPCell(innerTable);
+            cell3.setBorder(PdfPCell.NO_BORDER);
+            cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell3);
 
-                PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
-                cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                table2.addCell(cell7);
+            // Segunda fila
+            PdfPTable innerTable2 = new PdfPTable(1);
+            PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
+            innerTable2.addCell(number);
+            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+            innerTable2.addCell(ubic);
+            PdfPCell cell4 = new PdfPCell(innerTable2);
+            cell4.setBorder(PdfPCell.NO_BORDER);
+            cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell4);
 
-                PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));
-                table2.addCell(cell8);
+            PdfPTable innerTable3 = new PdfPTable(1);
+            PdfPCell numberO = new PdfPCell(new Paragraph("084-134", normalFont));
+            innerTable3.addCell(numberO);
+            PdfPCell ubicO = new PdfPCell(new Paragraph("", normalFont));
+            innerTable3.addCell(ubicO);
+            PdfPCell cell5 = new PdfPCell(innerTable3);
+            cell5.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(cell5);
 
-                //Cuarta fila
-                PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
-                cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                table2.addCell(cell9);
+            PdfPTable innerTable4 = new PdfPTable(1);
+            PdfPTable innerTable41 = new PdfPTable(2);
+            PdfPCell fechai = new PdfPCell(new Paragraph("FECHA INICIO:", normalBoldFont));
+            fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            innerTable41.addCell(fechai);
+            PdfPCell fechaiO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            innerTable41.addCell(fechaiO);
+            PdfPCell cellfecha = new PdfPCell(innerTable41);
+            cellfecha.setBorder(PdfPCell.NO_BORDER);
+            innerTable4.addCell(cellfecha);
 
-                PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
-                cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
-                table2.addCell(cell10);
-                
-                document.add(table2);
+            PdfPTable innerTable42 = new PdfPTable(2);
+            PdfPCell fechaf = new PdfPCell(new Paragraph("FECHA FINAL:", normalBoldFont));
+            fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            innerTable42.addCell(fechaf);
+            PdfPCell fechafO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            innerTable42.addCell(fechafO);
+            PdfPCell cellfechaf = new PdfPCell(innerTable42);
+            cellfechaf.setBorder(PdfPCell.NO_BORDER);
+            innerTable4.addCell(cellfechaf);
 
-            } catch (DocumentException | IOException e) {
-                e.printStackTrace();
-            } finally {
-                // Cerrar el documento
-                document.close();
-            }
+            PdfPCell cell6 = new PdfPCell(innerTable4);
+            cell6.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(cell6);
 
-            System.out.println("PDF creado exitosamente en: " + dest);
-        } else {
-            System.out.println("La acción de guardado fue cancelada por el usuario.");
+            document.add(table);
+
+            // Tercera fila
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setWidthPercentage(100);
+            table2.setWidths(new float[]{1, 2});
+
+            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+            cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table2.addCell(cell7);
+            PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));
+            table2.addCell(cell8);
+
+            PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
+            cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table2.addCell(cell9);
+            PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
+            cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table2.addCell(cell10);
+
+            document.add(table2);
+
+            // Seleccionar imágenes y agregarlas al documento
+            selectImage(document);
+
+            // Cerrar el documento
+            document.close();
+
+            System.out.println("PDF creado exitosamente.");
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
         }
     }
 }

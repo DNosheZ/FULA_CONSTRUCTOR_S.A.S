@@ -171,17 +171,31 @@ public class CreatePDFExample {
                 cell6.setBorder(PdfPCell.NO_BORDER);
                 table.addCell(cell6);
                 
-
-                // Tercera fila
-                table.addCell(new PdfPCell(new Paragraph("UBICACIÓN")));
-                table.addCell(new PdfPCell(new Paragraph("")));
-                PdfPCell fechaFinal = new PdfPCell();
-                fechaFinal.addElement(new Paragraph("FECHA FINAL:"));
-                fechaFinal.addElement(new Paragraph("22/05/2024"));
-                table.addCell(fechaFinal);
-
                 // Añadir la tabla al documento
                 document.add(table);
+
+                // Tercera fila
+                // Crear una tabla con 2 columnas
+                PdfPTable table2 = new PdfPTable(2);
+                table2.setWidthPercentage(100); // Ancho de la tabla
+                table2.setWidths(new float[]{1, 2}); // Definir el ancho de las columnas
+
+                PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+                cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                table2.addCell(cell7);
+
+                PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));
+                table2.addCell(cell8);
+
+                //Cuarta fila
+                PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
+                cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                table2.addCell(cell9);
+
+                PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
+                cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table2.addCell(cell10);
+                
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();

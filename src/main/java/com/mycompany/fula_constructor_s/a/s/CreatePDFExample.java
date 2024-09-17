@@ -25,6 +25,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class CreatePDFExample {
+
+    public void selectImage(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Buscar evidencias");
+
+        int userSelection = fileChooser.showOpenDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFiles();
+
+            String [] filePaths;
+            for (iterable_type file : Element) {
+                filePaths = Element.getAbsolutePath();
+            }
+
+            System.out.println(filePaths);
+        }
+    }
+
     public static void main(String[] args) {
         // Usar JFileChooser para que el usuario elija la ruta
         JFileChooser fileChooser = new JFileChooser();

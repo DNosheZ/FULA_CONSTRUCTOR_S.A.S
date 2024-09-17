@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class CreatePDFExample {
 
-    public void selectImage(){
+    public static void selectImage(){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Buscar evidencias");
 
@@ -36,15 +36,16 @@ public class CreatePDFExample {
             File file = fileChooser.getSelectedFiles();
 
             String [] filePaths;
-            for (iterable_type file : Element) {
-                filePaths = Element.getAbsolutePath();
-            }
+            filePaths = file.getAbsolutePath();
+        
 
             System.out.println(filePaths);
         }
     }
 
     public static void main(String[] args) {
+        selectImage();
+        
         // Usar JFileChooser para que el usuario elija la ruta
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar PDF como...");
@@ -81,10 +82,6 @@ public class CreatePDFExample {
                 Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
                 Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
                 
-                JFileChooser fileimageChooser = new JFileChooser();
-                File[] files = fileimageChooser.getSelectedFiles();
-
-                System.out.println(files);
 
                 Image logo = Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
                 logo.scaleToFit(100, 50);

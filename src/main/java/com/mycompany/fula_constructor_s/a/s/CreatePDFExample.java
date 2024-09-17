@@ -35,6 +35,7 @@ public class CreatePDFExample {
         
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
+
             String dest = fileToSave.getAbsolutePath();
 
             // Asegurarse de que el archivo tenga la extensión .pdf
@@ -60,10 +61,12 @@ public class CreatePDFExample {
                 Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
                 Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
                 Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
+                
+                JFileChooser fileimageChooser = new JFileChooser();
+                File[] files = fileimageChooser.getSelectedFiles();
 
+                System.out.println(files);
 
-                // Primera fila del encabezado (imagen y texto)
-                // Insertar una imagen
                 Image logo = Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
                 logo.scaleToFit(100, 50);
                 PdfPCell cell1 = new PdfPCell(logo);
@@ -192,12 +195,11 @@ public class CreatePDFExample {
                 cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 table2.addCell(cell9);
 
-                document.add(table2);
-
                 PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
                 cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell10);
                 
+                document.add(table2);
 
             } catch (DocumentException | IOException e) {
                 e.printStackTrace();

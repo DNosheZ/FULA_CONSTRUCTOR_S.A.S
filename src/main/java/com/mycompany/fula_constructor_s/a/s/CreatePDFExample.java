@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class CreatePDFExample {
 
@@ -35,7 +36,7 @@ public class CreatePDFExample {
     private static Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
 
     // seleccionar imágenes y agregarlas al documento
-    public static void selectImage(Document document) {
+    public static void selectImage(Document document) throws DocumentException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true);
         fileChooser.setDialogTitle("Seleccionar Imágenes");
@@ -45,6 +46,8 @@ public class CreatePDFExample {
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
+            
+            
 
             PdfPTable tablename = new PdfPTable(1);
             tablename.setWidthPercentage(100);
@@ -55,12 +58,23 @@ public class CreatePDFExample {
             space.setBorder(PdfPCell.NO_BORDER);
             tablename.addCell(space);
             
-            PdfPCell nameserv = new PdfPCell(new Paragraph("1. MANTENIMIENTO CORRECTIVO DE VENTILADORES", normalBoldFont));
+            String servicioPrestado = obtenerNombreServicio();
+
+            // Crear la tabla principal
+            PdfPTable table = new PdfPTable(3);
+            // Crear la tabla principal
+            PdfPTable tablenam = new PdfPTable(1);
+
+            // Create the cell with the service name
+            PdfPCell nameserv = new PdfPCell(new Paragraph("1. " + servicioPrestado, normalBoldFont));
             nameserv.setHorizontalAlignment(Element.ALIGN_CENTER);
             nameserv.setBackgroundColor(BaseColor.LIGHT_GRAY);
+
+            // Add the nameserv cell to the tablename
             tablename.addCell(nameserv);
-            
-            tablename.addCell(space);
+
+            // ... other code to add images or tables
+            document.add(tablenam);
             
             try {
                 document.add(tablename);
@@ -273,7 +287,7 @@ public class CreatePDFExample {
 
             // Seleccionar imágenes y agregarlas al documento
             selectImage(document);
-
+            
             // Cerrar el documento
             document.close();
 
@@ -282,5 +296,16 @@ public class CreatePDFExample {
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
+    }
+    // Método para obtener el nombre del servicio con validación básica
+    private static String obtenerNombreServicio() {
+        String servicioPrestado;
+        do {
+            servicioPrestado = JOptionPane.showInputDialog(null, "Ingrese el nombre del servicio prestado:");
+            if (servicioPrestado == null || servicioPrestado.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe ingresar un nombre de servicio válido.");
+            }
+        } while (servicioPrestado == null || servicioPrestado.trim().isEmpty());
+        return servicioPrestado;
     }
 }

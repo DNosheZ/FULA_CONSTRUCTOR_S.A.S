@@ -24,8 +24,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CreatePDFExample {
+
+    // Definir estilos de fuente
+    private static Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
+    private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
+    private static Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
 
     // seleccionar imágenes y agregarlas al documento
     public static void selectImage(Document document) {
@@ -39,11 +46,34 @@ public class CreatePDFExample {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File[] selectedFiles = fileChooser.getSelectedFiles();
 
+            PdfPTable tablename = new PdfPTable(1);
+            tablename.setWidthPercentage(100);
+            tablename.setPaddingTop(12);
+            
+            PdfPCell space = new PdfPCell(new Paragraph(" ", normalBoldFont));
+            //space.setPadding(5);
+            space.setBorder(PdfPCell.NO_BORDER);
+            tablename.addCell(space);
+            
+            PdfPCell nameserv = new PdfPCell(new Paragraph("1. MANTENIMIENTO CORRECTIVO DE VENTILADORES", normalBoldFont));
+            nameserv.setHorizontalAlignment(Element.ALIGN_CENTER);
+            nameserv.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            tablename.addCell(nameserv);
+            
+            tablename.addCell(space);
+            
+            try {
+                document.add(tablename);
+            } catch (DocumentException ex) {
+                Logger.getLogger(CreatePDFExample.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             // Crear una tabla de 3 columnas para las imágenes (independiente de cuántas imágenes se seleccionen)
-            PdfPTable imageTable = new PdfPTable(3);
+            int col = (selectedFiles.length / 10) + 4;
+            PdfPTable imageTable = new PdfPTable(col);
             imageTable.setWidthPercentage(100); // Ajustar el ancho de la tabla
             try {
-                imageTable.setWidths(new float[]{1, 1, 1});  // Definir los anchos de las columnas
+                imageTable.setWidths(new float[]{});  // Definir los anchos de las columnas
             } catch (DocumentException e) {
                 e.printStackTrace();
             }
@@ -52,7 +82,16 @@ public class CreatePDFExample {
             for (File file : selectedFiles) {
                 try {
                     Image img = Image.getInstance(file.getAbsolutePath());
-                    img.scaleToFit(100, 100); // Ajustar el tamaño de la imagen
+
+                    // Controlar mejor la escala de las imágenes
+                    float maxWidth = 100;  // Ancho máximo permiøtido
+                    float maxHeight = 50; // Alto máximo permitido
+                    float width = img.getWidth();
+                    float height = img.getHeight();
+
+                    // Calcular la relación de escala manteniendo el aspecto de la imagen
+                    float scaleFactor = Math.min(maxWidth / width, maxHeight / height);
+                    img.scaleAbsolute(width * scaleFactor, height * scaleFactor);
 
                     PdfPCell imageCell = new PdfPCell(img, true);
                     imageCell.setPadding(5);
@@ -65,7 +104,7 @@ public class CreatePDFExample {
             }
 
             // Si el número de imágenes seleccionadas no llena todas las columnas, agregar celdas vacías
-            int remainingCells = (3 - (selectedFiles.length % 3)) % 3;
+            int remainingCells = (col - (selectedFiles.length % col)) % col;
             if (remainingCells != 0) {  // Solo añadir celdas vacías si es necesario
                 for (int i = 0; i < remainingCells; i++) {
                     imageTable.addCell(new PdfPCell());
@@ -87,7 +126,7 @@ public class CreatePDFExample {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar PDF");
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo PDF", "pdf"));
-        fileChooser.setSelectedFile(new File("informe_con_imagenes.pdf")); // Nombre por defecto
+        fileChooser.setSelectedFile(new File("informe de obra.pdf")); // Nombre por defecto
 
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
@@ -118,11 +157,6 @@ public class CreatePDFExample {
             PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100); // Ancho de la tabla
             table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
-
-            // Definir estilos de fuente
-            Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
-            Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
-            Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
 
             // Imagen del logo
             Image logo = Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen

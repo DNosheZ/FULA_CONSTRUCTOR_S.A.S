@@ -8,9 +8,12 @@ package com.mycompany.fula_constructor_s.a.s;
  *
  * @author Windows
  */
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -21,36 +24,43 @@ import javax.swing.JOptionPane;
 import java.io.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author RyZen 5 Pro
  */
 public class frontInformes extends javax.swing.JFrame {
+    
+    // Definir estilos de fuente
+    private Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
+    private Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
+    private Font normalBoldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.DARK_GRAY);
 
     private ImageIcon image;
     private Icon icon;
     private String userName;
-    
+    private Informe informe;
+    private String Cliente, numInforme, fechaInicio, fechaFin, ubicacion, justificacion, actividades, nameRes, numRes;
+    private File[] files;
+    private HashMap<String, File[]> servicios;
+
     /**
      *
      * @param userName
      */
     public frontInformes(String userName) {
         initComponents();
+        this.informe = new Informe();
         this.userName = userName;
         this.setResizable(false);
         this.setLogo(imgLogo, "src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");
         this.setInfo(lblToday);
-        
+
     }
 
     /**
@@ -59,8 +69,6 @@ public class frontInformes extends javax.swing.JFrame {
     public frontInformes() {
         initComponents();
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,40 +80,50 @@ public class frontInformes extends javax.swing.JFrame {
     private void initComponents() {
 
         jCalendar1 = new com.toedter.calendar.JCalendar();
-        dateStartWork = new com.toedter.calendar.JDateChooser();
+        dateInicio = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         imgLogo = new javax.swing.JLabel();
         lblToday = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNumInforme = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        dateStartWork1 = new com.toedter.calendar.JDateChooser();
+        dateFin = new com.toedter.calendar.JDateChooser();
         jLabel14 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtUbicacion = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jTextField3 = new javax.swing.JTextField();
+        txtJustificacion = new javax.swing.JTextArea();
+        txtActividades = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtDescA = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         paneScroll = new javax.swing.JScrollPane();
         paneActivitys = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        btnPreview = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
+        cbxCliente = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        txtNameRes = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        txtNumRes = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
+        menuArchivo = new javax.swing.JMenu();
+        mSaveInforme = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        dateInicio.setDateFormatString("dd/MM/yyyy");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setText("INFORME DE OBRA");
@@ -125,6 +143,8 @@ public class frontInformes extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("Fecha de finalizacion");
 
+        dateFin.setDateFormatString("dd/MM/yyyy");
+
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setText("Ubicacion de la obra");
 
@@ -132,11 +152,11 @@ public class frontInformes extends javax.swing.JFrame {
         jLabel15.setText("Actividades");
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel16.setText("Justificacion de la obra");
+        jLabel16.setText("Nombre del responsable");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        txtJustificacion.setColumns(20);
+        txtJustificacion.setRows(5);
+        jScrollPane3.setViewportView(txtJustificacion);
 
         jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel17.setText("Cliente");
@@ -156,14 +176,6 @@ public class frontInformes extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        btnPreview.setText("Vista previa");
-        btnPreview.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPreviewActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnPreview);
-
         jButton3.setText("Enviar para aprobacion");
         jPanel1.add(jButton3);
 
@@ -175,6 +187,14 @@ public class frontInformes extends javax.swing.JFrame {
         });
         jPanel1.add(btnPrint);
 
+        cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel19.setText("Justificacion de la obra");
+
+        jLabel20.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel20.setText("Numero del responsable");
+
         jMenu2.setText("Volver");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -182,6 +202,27 @@ public class frontInformes extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu2);
+
+        menuArchivo.setText("Archivo");
+
+        mSaveInforme.setText("Guardar informe");
+        mSaveInforme.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mSaveInformeMouseClicked(evt);
+            }
+        });
+        menuArchivo.add(mSaveInforme);
+
+        jMenu4.setText("Descargar en PDF");
+        menuArchivo.add(jMenu4);
+
+        jMenu3.setText("Ver vista previa");
+        menuArchivo.add(jMenu3);
+
+        jMenu5.setText("Enviar informe por e-mail");
+        menuArchivo.add(jMenu5);
+
+        jMenuBar1.add(menuArchivo);
 
         jMenu1.setText("Herramientas");
 
@@ -203,53 +244,69 @@ public class frontInformes extends javax.swing.JFrame {
                         .addComponent(jLabel10))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(78, 78, 78)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel17)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addGap(211, 211, 211)
-                                .addComponent(lblToday)
-                                .addGap(49, 49, 49))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel18)
-                                            .addComponent(jLabel11)
-                                            .addComponent(jLabel14))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(53, 53, 53)
-                                        .addComponent(dateStartWork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(dateStartWork1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(470, 470, 470)
-                                .addComponent(jLabel15)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDescA, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(paneScroll)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtDescA, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel18)
+                                    .addGap(630, 630, 630)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7)
+                                    .addGap(211, 211, 211)
+                                    .addComponent(lblToday)
+                                    .addGap(49, 49, 49))
+                                .addComponent(paneScroll)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(470, 470, 470)
+                                            .addComponent(jLabel15)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel19)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel11)
+                                                        .addComponent(jLabel14))
+                                                    .addGap(28, 28, 28)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(txtUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                        .addComponent(txtNumInforme, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                        .addComponent(cbxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addComponent(jLabel17)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel16)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                                    .addComponent(txtNameRes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel12)
+                                                        .addGap(53, 53, 53)
+                                                        .addComponent(dateInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel13)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel20)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtNumRes, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGap(79, 79, 79))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,45 +319,51 @@ public class frontInformes extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addComponent(lblToday))
                     .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNumInforme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14))
                         .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(dateStartWork, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(dateStartWork1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(36, 36, 36)
+                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNameRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel20)
+                    .addComponent(txtNumRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(paneScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
@@ -316,7 +379,7 @@ public class frontInformes extends javax.swing.JFrame {
         txtDescA.setText("");
         JButton btnEv = new JButton();
         btnEv.setText("Agregar evidencias");
-           
+
         // Añadir ActionListener al botón para abrir el JFileChooser
         btnEv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,7 +394,7 @@ public class frontInformes extends javax.swing.JFrame {
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     selectedFile.getAbsolutePath();
-                    
+
                     //este path se agrega a la cadena que empezo cuando 
                 }
             }
@@ -339,7 +402,7 @@ public class frontInformes extends javax.swing.JFrame {
         paneActivitys.add(activity);
         paneActivitys.add(btnEv);
         paneActivitys.revalidate();
-        
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
@@ -349,15 +412,87 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jMenu2MouseClicked
 
-    private void btnPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviewActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnPreviewActionPerformed
-
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
         this.imprimir();
     }//GEN-LAST:event_btnPrintActionPerformed
+
+    public void ConfirmSave() {
+        Icon iconoArchivo = UIManager.getIcon("FileView.fileIcon");
+
+        // Mostrar cuadro de diálogo de confirmación
+        int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Deseas guardar el informe?",
+                "Confirmación",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                iconoArchivo
+        );
+
+        // Comprobar si el usuario ha presionado "OK"
+        if (opcion == JOptionPane.OK_OPTION) {
+            // Aquí va la lógica para guardar la información
+            saveInforme();
+        } else {
+            // Si presiona "Cancel", simplemente cierra el cuadro de diálogo
+            System.out.println("Operación cancelada.");
+        }
+    }
+
+    public void ConfirmSaveR() {
+        Icon iconoArchivo = UIManager.getIcon("FileView.fileIcon");
+
+        // Mostrar cuadro de diálogo de confirmación
+        int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Existen campos vacios, deseas guardar el informe aun asi?",
+                "Confirmación",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                iconoArchivo
+        );
+
+        // Comprobar si el usuario ha presionado "OK"
+        if (opcion == JOptionPane.OK_OPTION) {
+            // Aquí va la lógica para guardar la información
+            saveInforme();
+        } else {
+            // Si presiona "Cancel", simplemente cierra el cuadro de diálogo
+            System.out.println("Operación cancelada.");
+        }
+    }
+
+    public void saveInforme() {
+
+    }
+
+    public void setInfo() {
+        this.Cliente = (String) cbxCliente.getSelectedItem();
+        this.numInforme = txtNumInforme.getText();
+        this.fechaInicio = dateInicio.getDateFormatString();
+        this.fechaFin = dateFin.getDateFormatString();
+        this.ubicacion = txtUbicacion.getText();
+        this.justificacion = txtJustificacion.getText();
+        this.actividades = txtActividades.getText();
+        this.nameRes = txtNameRes.getText();
+        this.numRes = txtNumRes.getText();
+    }
+
+    private void mSaveInformeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mSaveInformeMouseClicked
+        // TODO add your handling code here:
+        try {
+            setInfo();
+
+            if (Cliente.isEmpty() || numInforme.isEmpty() || fechaInicio.isEmpty() || nameRes.isEmpty() || fechaFin.isEmpty() || ubicacion.isEmpty() || justificacion.isEmpty() || actividades.isEmpty() || numRes.isEmpty()) {
+                ConfirmSaveR();
+            } else {
+                ConfirmSave();
+            }
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_mSaveInformeMouseClicked
 
     /**
      *
@@ -369,123 +504,181 @@ public class frontInformes extends javax.swing.JFrame {
      * @param StartDateText
      * @param workId
      */
-    public void AddLine(String workDirection,String email,String responsableName,String socialReason,String FinishDateText,
-            String StartDateText, String workId){
-        try(FileWriter fw = new FileWriter("clients.txt",true)){
+    public void AddLine(String workDirection, String email, String responsableName, String socialReason, String FinishDateText,
+            String StartDateText, String workId) {
+        try (FileWriter fw = new FileWriter("clients.txt", true)) {
             PrintWriter pw = new PrintWriter(fw);
-            pw.println(responsableName+";"+workId+";"+email+";"+socialReason+";"+workDirection + ";" + StartDateText+";"+
-                    FinishDateText);
-        }catch (IOException e){
-            
+            pw.println(responsableName + ";" + workId + ";" + email + ";" + socialReason + ";" + workDirection + ";" + StartDateText + ";"
+                    + FinishDateText);
+        } catch (IOException e) {
+
         }
     }
     
-    public void imprimir() {
-        // Usar JFileChooser para que el usuario elija la ruta
+    /**
+     *
+     * @return
+     */
+    public File selectSaveLocation() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar PDF como...");
-        
-        // Mostrar el cuadro de diálogo de guardar
+        fileChooser.setDialogTitle("Guardar PDF");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo PDF", "pdf"));
+        fileChooser.setSelectedFile(new File("informe de obra.pdf")); // Nombre por defecto
+
         int userSelection = fileChooser.showSaveDialog(null);
-        
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToSave = fileChooser.getSelectedFile();
-            String dest = fileToSave.getAbsolutePath();
-
-            // Asegurarse de que el archivo tenga la extensión .pdf
-            if (!dest.toLowerCase().endsWith(".pdf")) {
-                dest += ".pdf";
-            }
-
-            // Crear el documento
-            Document document = new Document();
-            try {
-                // Crear un PdfWriter para escribir el archivo
-                PdfWriter.getInstance(document, new FileOutputStream(dest));
-
-                // Abrir el documento
-                document.open();
-
-                // Crear una tabla con 3 columnas
-                PdfPTable table = new PdfPTable(3);
-                table.setWidthPercentage(100); // Ancho de la tabla
-                table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
-
-                // Primera fila del encabezado (imagen y texto)
-                // Insertar una imagen
-                com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
-                logo.scaleToFit(100, 50);
-                PdfPCell cell1 = new PdfPCell(logo);
-                cell1.setBorder(PdfPCell.BOX);
-                cell1.setHorizontalAlignment(Element.ALIGN_CENTER); // Centrar la imagen en la celda
-                cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                table.addCell(cell1);
-
-                // Celda de texto del título
-                PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA"));
-                cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                cell2.setBorder(PdfPCell.BOX);
-                table.addCell(cell2);
-
-                // Crear una tabla interna para cell3
-                PdfPTable innerTable = new PdfPTable(1);
-                innerTable.setWidthPercentage(100);
-
-                // Celda para la fecha
-                PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024"));
-                fechaCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(fechaCell);
-
-                // Celda para la versión
-                PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN"));
-                versionLabelCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(versionLabelCell);
-
-                // Celda para el número de versión
-                PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1"));
-                versionNumberCell.setBorder(PdfPCell.BOX);  // Añadir borde
-                versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                innerTable.addCell(versionNumberCell);
-
-                // Añadir la tabla interna a cell3
-                PdfPCell cell3 = new PdfPCell(innerTable);
-                cell3.setBorder(PdfPCell.NO_BORDER);
-                table.addCell(cell3);
-
-                // Segunda fila
-                table.addCell(new PdfPCell(new Paragraph("ORDEN DE OBRA No")));
-                table.addCell(new PdfPCell(new Paragraph("084-183")));
-                PdfPCell fechaInicio = new PdfPCell();
-                fechaInicio.addElement(new Paragraph("FECHA INICIO:"));
-                fechaInicio.addElement(new Paragraph("22/05/2024"));
-                table.addCell(fechaInicio);
-
-                // Tercera fila
-                table.addCell(new PdfPCell(new Paragraph("UBICACIÓN")));
-                table.addCell(new PdfPCell(new Paragraph("")));
-                PdfPCell fechaFinal = new PdfPCell();
-                fechaFinal.addElement(new Paragraph("FECHA FINAL:"));
-                fechaFinal.addElement(new Paragraph("22/05/2024"));
-                table.addCell(fechaFinal);
-
-                // Añadir la tabla al documento
-                document.add(table);
-
-            } catch (DocumentException | IOException e) {
-                e.printStackTrace();
-            } finally {
-                // Cerrar el documento
-                document.close();
-            }
-
-            System.out.println("PDF creado exitosamente en: " + dest);
+            return fileChooser.getSelectedFile();
         } else {
-            System.out.println("La acción de guardado fue cancelada por el usuario.");
+            System.out.println("No se seleccionó ninguna ubicación para guardar el archivo.");
+            return null;
         }
     }
+
+    public void imprimir() {
+        File file = selectSaveLocation();
+        if (file == null) {
+            return;  // Salir si no se seleccionó ubicación para guardar el archivo
+        }
+
+        try {
+            // Crear el documento
+            Document document = new Document();
+
+            // Crear el PdfWriter con la ubicación seleccionada
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+
+            // Abrir el documento
+            document.open();
+
+            // Crear una tabla con 3 columnas
+            PdfPTable table = new PdfPTable(3);
+            table.setWidthPercentage(100); // Ancho de la tabla
+            table.setWidths(new float[]{1, 1, 1}); // Definir el ancho de las columnas
+
+            // Imagen del logo
+            com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");  // Cambia la ruta por tu imagen
+            logo.scaleToFit(100, 50);
+            PdfPCell cell1 = new PdfPCell(logo);
+            cell1.setBorder(PdfPCell.BOX);
+            cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cell1.setHorizontalAlignment(Element.ALIGN_CENTER);  // Centrar la imagen en la celda
+            cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(cell1);
+
+            // Celda de texto del título
+            PdfPCell cell2 = new PdfPCell(new Paragraph("INFORME DE VISITA TÉCNICA", titleFont));
+            cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell2.setBorder(PdfPCell.BOX);
+            cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell2);
+
+            // Crear una tabla interna para la celda 3
+            PdfPTable innerTable = new PdfPTable(1);
+            innerTable.setWidthPercentage(100);
+
+            // Celda para la fecha
+            PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024", normalBoldFont));
+            fechaCell.setBorder(PdfPCell.BOX);
+            fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(fechaCell);
+
+            // Celda para la versión
+            PdfPCell versionLabelCell = new PdfPCell(new Paragraph("VERSIÓN", normalBoldFont));
+            versionLabelCell.setBorder(PdfPCell.BOX);
+            versionLabelCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(versionLabelCell);
+
+            // Celda para el número de versión
+            PdfPCell versionNumberCell = new PdfPCell(new Paragraph("1", normalBoldFont));
+            versionNumberCell.setBorder(PdfPCell.BOX);
+            versionNumberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innerTable.addCell(versionNumberCell);
+
+            // Añadir la tabla interna a la celda 3
+            PdfPCell cell3 = new PdfPCell(innerTable);
+            cell3.setBorder(PdfPCell.NO_BORDER);
+            cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell3);
+
+            // Segunda fila
+            PdfPTable innerTable2 = new PdfPTable(1);
+            PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
+            innerTable2.addCell(number);
+            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+            innerTable2.addCell(ubic);
+            PdfPCell cell4 = new PdfPCell(innerTable2);
+            cell4.setBorder(PdfPCell.NO_BORDER);
+            cell4.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table.addCell(cell4);
+
+            PdfPTable innerTable3 = new PdfPTable(1);
+            PdfPCell numberO = new PdfPCell(new Paragraph("084-134", normalFont));
+            innerTable3.addCell(numberO);
+            PdfPCell ubicO = new PdfPCell(new Paragraph("", normalFont));
+            innerTable3.addCell(ubicO);
+            PdfPCell cell5 = new PdfPCell(innerTable3);
+            cell5.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(cell5);
+
+            PdfPTable innerTable4 = new PdfPTable(1);
+            PdfPTable innerTable41 = new PdfPTable(2);
+            PdfPCell fechai = new PdfPCell(new Paragraph("FECHA INICIO:", normalBoldFont));
+            fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            innerTable41.addCell(fechai);
+            PdfPCell fechaiO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            innerTable41.addCell(fechaiO);
+            PdfPCell cellfecha = new PdfPCell(innerTable41);
+            cellfecha.setBorder(PdfPCell.NO_BORDER);
+            innerTable4.addCell(cellfecha);
+
+            PdfPTable innerTable42 = new PdfPTable(2);
+            PdfPCell fechaf = new PdfPCell(new Paragraph("FECHA FINAL:", normalBoldFont));
+            fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            innerTable42.addCell(fechaf);
+            PdfPCell fechafO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            innerTable42.addCell(fechafO);
+            PdfPCell cellfechaf = new PdfPCell(innerTable42);
+            cellfechaf.setBorder(PdfPCell.NO_BORDER);
+            innerTable4.addCell(cellfechaf);
+
+            PdfPCell cell6 = new PdfPCell(innerTable4);
+            cell6.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(cell6);
+
+            document.add(table);
+
+            // Tercera fila
+            PdfPTable table2 = new PdfPTable(2);
+            table2.setWidthPercentage(100);
+            table2.setWidths(new float[]{1, 2});
+
+            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+            cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table2.addCell(cell7);
+            PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));
+            table2.addCell(cell8);
+
+            PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
+            cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            table2.addCell(cell9);
+            PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
+            cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table2.addCell(cell10);
+
+            document.add(table2);
+
+            
+            // Cerrar el documento
+            document.close();
+
+            System.out.println("PDF creado exitosamente.");
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -520,25 +713,25 @@ public class frontInformes extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void setLogo(JLabel img,String root){
+
+    private void setLogo(JLabel img, String root) {
         this.image = new ImageIcon(root);
-        this.icon = new ImageIcon(this.image.getImage().getScaledInstance(img.getWidth(), img.getHeight(), Image.SCALE_SMOOTH));
+        this.icon = new ImageIcon(this.image.getImage().getScaledInstance(img.getWidth(), img.getHeight(), java.awt.Image.SCALE_SMOOTH));
         img.setIcon(this.icon);
-        //this.repaint();
+        this.repaint();
     }
-    
-    private void setInfo(JLabel fechaH){
+
+    private void setInfo(JLabel fechaH) {
         LocalDate hoy = LocalDate.now();
-        
+
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
+
         String hoyff = hoy.format(format);
-        
+
         fechaH.setText(hoyff);
     }
-    
-    private void setButtonsEv(int num, JPanel pane){
+
+    private void setButtonsEv(int num, JPanel pane) {
         for (int i = 0; i < num; i++) {
             JButton btn = new JButton();
             btn.setText("Actividad " + i);
@@ -548,10 +741,10 @@ public class frontInformes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnPreview;
     private javax.swing.JButton btnPrint;
-    private com.toedter.calendar.JDateChooser dateStartWork;
-    private com.toedter.calendar.JDateChooser dateStartWork1;
+    private javax.swing.JComboBox<String> cbxCliente;
+    private com.toedter.calendar.JDateChooser dateFin;
+    private com.toedter.calendar.JDateChooser dateInicio;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JButton jButton3;
     private com.toedter.calendar.JCalendar jCalendar1;
@@ -564,21 +757,29 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblToday;
+    private javax.swing.JMenu mSaveInforme;
+    private javax.swing.JMenu menuArchivo;
     private javax.swing.JPanel paneActivitys;
     private javax.swing.JScrollPane paneScroll;
+    private javax.swing.JTextField txtActividades;
     private javax.swing.JTextField txtDescA;
+    private javax.swing.JTextArea txtJustificacion;
+    private javax.swing.JTextField txtNameRes;
+    private javax.swing.JTextField txtNumInforme;
+    private javax.swing.JTextField txtNumRes;
+    private javax.swing.JTextField txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

@@ -35,7 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author RyZen 5 Pro
  */
 public class frontInformes extends javax.swing.JFrame {
-    
+
     // Definir estilos de fuente
     private Font titleFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.DARK_GRAY);
     private Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
@@ -501,7 +501,38 @@ public class frontInformes extends javax.swing.JFrame {
     }
 
     public void saveInforme() {
+        // Generar el nombre del archivo único (puedes usar numInforme o un timestamp)
+        String nombreArchivo = "informe_" + numInforme + ".txt";
         
+        try {
+            // Crear el FileWriter
+            FileWriter writer = new FileWriter("Informes/"+nombreArchivo,true);
+            PrintWriter pw = new PrintWriter(writer);
+            
+            
+            // Escribir los atributos principales separados por |
+            pw.println(Cliente + "|" + numInforme + "|" + fechaInicio + "|" + fechaFin + "|" + ubicacion + "|"
+                    + justificacion + "|" + actividades + "|" + nameRes + "|" + numRes);
+
+            // Recorrer el HashMap y escribir las claves y archivos
+            for (String clave : servicios.keySet()) {
+                pw.print(clave);  // Escribir la clave
+
+                // Escribir los archivos asociados a la clave
+                for (File archivo : servicios.get(clave)) {
+                    writer.write("|" + archivo.getAbsolutePath());  // Escribir la ruta del archivo
+                }
+
+                pw.print("\n");  // Nueva línea para cada clave
+            }
+
+            // Cerrar el escritor
+            writer.close();
+            System.out.println("Informe guardado como: " + nombreArchivo);
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al guardar el informe.");
+            e.printStackTrace();
+        }
     }
 
     public void setInfo() {
@@ -551,7 +582,7 @@ public class frontInformes extends javax.swing.JFrame {
 
         }
     }
-    
+
     /**
      *
      * @return
@@ -705,7 +736,6 @@ public class frontInformes extends javax.swing.JFrame {
 
             document.add(table2);
 
-            
             // Cerrar el documento
             document.close();
 

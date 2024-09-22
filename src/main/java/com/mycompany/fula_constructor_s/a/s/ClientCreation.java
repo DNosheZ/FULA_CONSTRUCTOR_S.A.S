@@ -17,9 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class ClientCreation extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ClientCreation
-     */
+    private String name, id, address, nameEmp, email;
+
     public ClientCreation() {
         initComponents();
     }
@@ -33,157 +32,146 @@ public class ClientCreation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         clientNameTxt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        clientIdTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         clientSocialReasonTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         clientDirectionTxt = new javax.swing.JTextField();
-        createClientBttn = new javax.swing.JButton();
-        backClientBttn = new javax.swing.JButton();
-        clientEmailTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        clientIdTxt = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        clientEmailTxt = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        createClientBttn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuBack = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Creacion de clientes");
+        jPanel1.setLayout(new java.awt.GridLayout(0, 4, 12, 5));
 
         jLabel2.setText("Nombre:");
+        jPanel1.add(jLabel2);
+        jPanel1.add(clientNameTxt);
+
+        jLabel6.setText("Identificacion:");
+        jPanel1.add(jLabel6);
+        jPanel1.add(clientIdTxt);
 
         jLabel3.setText("Razón social:");
+        jPanel1.add(jLabel3);
+        jPanel1.add(clientSocialReasonTxt);
 
         jLabel4.setText("Direccion:");
+        jPanel1.add(jLabel4);
+        jPanel1.add(clientDirectionTxt);
 
-        createClientBttn.setText("Crear cliente");
+        jLabel5.setText("Correo electronico:");
+        jPanel1.add(jLabel5);
+        jPanel1.add(clientEmailTxt);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Administrador de clientes");
+
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 12, 0));
+
+        createClientBttn.setText("Guardar");
         createClientBttn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createClientBttnActionPerformed(evt);
             }
         });
+        jPanel2.add(createClientBttn);
 
-        backClientBttn.setText("Volver");
-        backClientBttn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backClientBttnActionPerformed(evt);
+        jButton1.setText("Buscar");
+        jPanel2.add(jButton1);
+
+        menuBack.setText("Salir");
+        menuBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuBackMouseClicked(evt);
             }
         });
+        jMenuBar1.add(menuBack);
 
-        jLabel5.setText("Correo electronico:");
-
-        jLabel6.setText("Identificacion:");
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(clientSocialReasonTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(clientDirectionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(clientEmailTxt)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(clientIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(clientNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(47, 47, 47))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(createClientBttn)
-                        .addGap(18, 18, 18)
-                        .addComponent(backClientBttn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(108, 108, 108)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(clientNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clientIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(clientSocialReasonTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(clientDirectionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clientEmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(createClientBttn)
-                    .addComponent(backClientBttn))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void AddLine(String clientName,String clientId,String clientDirection,String clientSocialReason,String clientEmail){
-        try(FileWriter fw = new FileWriter("clients.txt",true)){
+    public void AddLine(String clientName, String clientId, String clientDirection, String clientSocialReason, String clientEmail) {
+        try (FileWriter fw = new FileWriter("Clientes/clientes.txt", true)) {
             PrintWriter pw = new PrintWriter(fw);
-            pw.println(clientId+";"+clientName+";"+clientSocialReason+";"+clientEmail+";"+clientDirection);
-        }catch (IOException e){
-            
+            pw.println(clientId + ";" + clientName + ";" + clientSocialReason + ";" + clientEmail + ";" + clientDirection);
+        } catch (IOException e) {
+
         }
     }
-    private void createClientBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createClientBttnActionPerformed
-        // TODO add your handling code here:
-        String clientName = clientNameTxt.getText();
-        String clientId = clientIdTxt.getText();
-        String clientDirection = clientDirectionTxt.getText();
-        String clientSocialReason= clientSocialReasonTxt.getText();
-        String clientEmail = clientEmailTxt.getText();
-        
-        
-        
-        if (!clientName.isEmpty() && !clientId.isEmpty() && !clientDirection.isEmpty()&& !clientSocialReason.isEmpty()&& !clientEmail.isEmpty()) {
-            RandomAccessFile raf = null; 
+
+    private void setInfo() {
+        name = clientNameTxt.getText();
+        id = clientIdTxt.getText();
+        address = clientDirectionTxt.getText();
+        nameEmp = clientSocialReasonTxt.getText();
+        email = clientEmailTxt.getText();
+    }
+    
+    private void eraser(){
+        clientNameTxt.setText("");
+        clientIdTxt.setText("");
+        clientDirectionTxt.setText("");
+        clientSocialReasonTxt.setText("");
+        clientEmailTxt.setText("");
+    }
+
+    private void saveCliente() {
+        this.setInfo();
+
+        if (!name.isEmpty() && !id.isEmpty() && !address.isEmpty() && !nameEmp.isEmpty() && !email.isEmpty()) {
+            RandomAccessFile raf = null;
             try {
                 String clientString;//fila de la base de datos
-               //id;nombre;razonsocial;email;direccion
-
-
+                //id;nombre;razonsocial;email;direccion
 
                 // Using file pointer creating the file->debe ser modificada 
-                File file = new File("C:\\Users\\Windows\\Documents\\NetBeansProjects\\FULA_CONSTRUCTOR_S.A.S\\clients.txt");
+                File file = new File("Clientes/clientes.txt");
 
                 if (!file.exists()) {
 
                     // Create a new file if not exists.
                     file.createNewFile();
                 }
-
-
 
                 // Opening file in reading and write mode.
                 raf = new RandomAccessFile(file, "rw");
@@ -201,23 +189,22 @@ public class ClientCreation extends javax.swing.JFrame {
                     String[] lineSplit = clientString.split(";");
 
                     // separating name and number.
-
-                    if (lineSplit[0].equals(clientId)){
+                    if (lineSplit[0].equals(id)) {
                         JOptionPane.showMessageDialog(null, "Ya hay un cliente registrado con esta identificacion.");
-                        clientExists=true;
+                        clientExists = true;
                         break;
                     }
                 }
-                if(!clientExists){
-                    AddLine(clientName,clientId,clientDirection,clientSocialReason,clientEmail);
+                if (!clientExists) {
+                    AddLine(name, id, address, nameEmp, email);
                     JOptionPane.showMessageDialog(null, "Cliente creado correctamente");
+                    eraser();
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Error al escribir en el archivo: " + e.getMessage());
                 e.printStackTrace(); // Opcional: para más detalles en la consola
             } finally {
-            // Cerrar el archivo en el bloque finally para asegurar que se cierre
+                // Cerrar el archivo en el bloque finally para asegurar que se cierre
                 if (raf != null) {
                     try {
                         raf.close();
@@ -227,18 +214,22 @@ public class ClientCreation extends javax.swing.JFrame {
                 }
             }
 
-            
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         }
+    }
+
+    private void createClientBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createClientBttnActionPerformed
+        // TODO add your handling code here:
+        this.saveCliente();
     }//GEN-LAST:event_createClientBttnActionPerformed
 
-    private void backClientBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backClientBttnActionPerformed
+    private void menuBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBackMouseClicked
         // TODO add your handling code here:
         UsersView view = new UsersView();
         view.setVisible(true);
         this.hide();
-    }//GEN-LAST:event_backClientBttnActionPerformed
+    }//GEN-LAST:event_menuBackMouseClicked
 
     /**
      * @param args the command line arguments
@@ -276,18 +267,22 @@ public class ClientCreation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backClientBttn;
     private javax.swing.JTextField clientDirectionTxt;
     private javax.swing.JTextField clientEmailTxt;
     private javax.swing.JTextField clientIdTxt;
     private javax.swing.JTextField clientNameTxt;
     private javax.swing.JTextField clientSocialReasonTxt;
     private javax.swing.JButton createClientBttn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu menuBack;
     // End of variables declaration//GEN-END:variables
 }

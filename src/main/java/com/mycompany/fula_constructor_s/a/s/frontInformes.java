@@ -27,6 +27,9 @@ import java.time.LocalDate;
 import javax.swing.ImageIcon;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -48,6 +51,8 @@ public class frontInformes extends javax.swing.JFrame {
     private String Cliente, numInforme, fechaInicio, fechaFin, ubicacion, justificacion, actividades, nameRes, numRes;
     private File[] files;
     private HashMap<String, File[]> servicios = new HashMap<>();
+
+    private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      *
@@ -105,7 +110,6 @@ public class frontInformes extends javax.swing.JFrame {
         paneServices = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        btnPrint = new javax.swing.JButton();
         cbxCliente = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         txtNameRes = new javax.swing.JTextField();
@@ -113,8 +117,8 @@ public class frontInformes extends javax.swing.JFrame {
         txtNumRes = new javax.swing.JTextField();
         paneActivitys1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuArchivo = new javax.swing.JMenu();
@@ -201,17 +205,6 @@ public class frontInformes extends javax.swing.JFrame {
         jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
         jPanel1.add(jButton3);
 
-        btnPrint.setBackground(new java.awt.Color(255, 254, 255));
-        btnPrint.setForeground(new java.awt.Color(150, 17, 52));
-        btnPrint.setText("Imprimir");
-        btnPrint.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
-        btnPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrintActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnPrint);
-
         cbxCliente.setBackground(new java.awt.Color(255, 254, 255));
         cbxCliente.setForeground(new java.awt.Color(150, 17, 52));
         cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar cliente" }));
@@ -241,17 +234,6 @@ public class frontInformes extends javax.swing.JFrame {
         });
         paneActivitys1.add(btnAdd);
 
-        btnDelete.setBackground(new java.awt.Color(255, 254, 255));
-        btnDelete.setForeground(new java.awt.Color(150, 17, 52));
-        btnDelete.setText("Eliminar");
-        btnDelete.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        paneActivitys1.add(btnDelete);
-
         btnUpdate.setBackground(new java.awt.Color(255, 254, 255));
         btnUpdate.setForeground(new java.awt.Color(150, 17, 52));
         btnUpdate.setText("Actualizar");
@@ -262,6 +244,17 @@ public class frontInformes extends javax.swing.JFrame {
             }
         });
         paneActivitys1.add(btnUpdate);
+
+        btnDelete.setBackground(new java.awt.Color(255, 254, 255));
+        btnDelete.setForeground(new java.awt.Color(150, 17, 52));
+        btnDelete.setText("Eliminar");
+        btnDelete.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        paneActivitys1.add(btnDelete);
 
         jMenu2.setText("Salir");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -290,6 +283,11 @@ public class frontInformes extends javax.swing.JFrame {
         menuArchivo.add(mSaveInforme);
 
         mDownloadPDF.setText("Descargar en PDF");
+        mDownloadPDF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mDownloadPDFMouseClicked(evt);
+            }
+        });
         menuArchivo.add(mDownloadPDF);
 
         jMenu3.setText("Ver vista previa");
@@ -503,11 +501,6 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_jMenu2MouseClicked
 
-    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        // TODO add your handling code here:
-        this.imprimir();
-    }//GEN-LAST:event_btnPrintActionPerformed
-
     public void ConfirmSave() {
         Icon iconoArchivo = UIManager.getIcon("FileView.fileIcon");
 
@@ -564,7 +557,7 @@ public class frontInformes extends javax.swing.JFrame {
                 PrintWriter pw = new PrintWriter(writer);
                 // Escribir los atributos principales separados por |
                 pw.println(Cliente + "|" + numInforme + "|" + fechaInicio + "|" + fechaFin + "|" + ubicacion + "|"
-                        + justificacion + "|" + actividades + "|" + nameRes + "|" + numRes);
+                        + justificacion + "|" + actividades + "|" + nameRes + "|" + numRes + "|" + "SV");
                 // Recorrer el HashMap y escribir las claves y archivos
                 for (String clave : servicios.keySet()) {
                     pw.print(clave);  // Escribir la clave
@@ -586,12 +579,10 @@ public class frontInformes extends javax.swing.JFrame {
     }
 
     public void setInfo() {
-        
-         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        
+
         this.Cliente = (String) cbxCliente.getSelectedItem();
         this.numInforme = txtNumInforme.getText();
-        this.fechaInicio = formato.format(dateInicio.getDate()) ;
+        this.fechaInicio = formato.format(dateInicio.getDate());
         this.fechaFin = formato.format(dateFin.getDate());
         this.ubicacion = txtUbicacion.getText();
         this.justificacion = txtJustificacion.getText();
@@ -648,6 +639,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -667,11 +659,17 @@ public class frontInformes extends javax.swing.JFrame {
         cbxCliente.setSelectedIndex(0);
         dateInicio.setDate(null);
         dateFin.setDate(null);
-        
+
         servicios.clear();
         this.paneServices.removeAll();
         this.paneServices.repaint();
     }//GEN-LAST:event_mNewInformeMouseClicked
+
+    private void mDownloadPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDownloadPDFMouseClicked
+        // TODO add your handling code here:
+        
+        imprimir();
+    }//GEN-LAST:event_mDownloadPDFMouseClicked
 
     /**
      *
@@ -713,22 +711,8 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }
 
-    public void imprimir() {
-        File file = selectSaveLocation();
-        if (file == null) {
-            return;  // Salir si no se seleccionó ubicación para guardar el archivo
-        }
-
+    public void headerPDF(Document document) {
         try {
-            // Crear el documento
-            Document document = new Document();
-
-            // Crear el PdfWriter con la ubicación seleccionada
-            PdfWriter.getInstance(document, new FileOutputStream(file));
-
-            // Abrir el documento
-            document.open();
-
             // Crear una tabla con 3 columnas
             PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100); // Ancho de la tabla
@@ -757,7 +741,7 @@ public class frontInformes extends javax.swing.JFrame {
             innerTable.setWidthPercentage(100);
 
             // Celda para la fecha
-            PdfPCell fechaCell = new PdfPCell(new Paragraph("7/08/2024", normalBoldFont));
+            PdfPCell fechaCell = new PdfPCell(new Paragraph(lblToday.getText(), normalBoldFont));
             fechaCell.setBorder(PdfPCell.BOX);
             fechaCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable.addCell(fechaCell);
@@ -792,9 +776,9 @@ public class frontInformes extends javax.swing.JFrame {
             table.addCell(cell4);
 
             PdfPTable innerTable3 = new PdfPTable(1);
-            PdfPCell numberO = new PdfPCell(new Paragraph("084-134", normalFont));
+            PdfPCell numberO = new PdfPCell(new Paragraph(txtNumInforme.getText(), normalFont));
             innerTable3.addCell(numberO);
-            PdfPCell ubicO = new PdfPCell(new Paragraph("", normalFont));
+            PdfPCell ubicO = new PdfPCell(new Paragraph(txtUbicacion.getText(), normalFont));
             innerTable3.addCell(ubicO);
             PdfPCell cell5 = new PdfPCell(innerTable3);
             cell5.setBorder(PdfPCell.NO_BORDER);
@@ -805,7 +789,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPCell fechai = new PdfPCell(new Paragraph("FECHA INICIO:", normalBoldFont));
             fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable41.addCell(fechai);
-            PdfPCell fechaiO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            PdfPCell fechaiO = new PdfPCell(new Paragraph(formato.format(dateInicio.getDate()), normalFont));
             innerTable41.addCell(fechaiO);
             PdfPCell cellfecha = new PdfPCell(innerTable41);
             cellfecha.setBorder(PdfPCell.NO_BORDER);
@@ -815,7 +799,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPCell fechaf = new PdfPCell(new Paragraph("FECHA FINAL:", normalBoldFont));
             fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable42.addCell(fechaf);
-            PdfPCell fechafO = new PdfPCell(new Paragraph("22/05/2024", normalFont));
+            PdfPCell fechafO = new PdfPCell(new Paragraph(formato.format(dateFin.getDate()), normalFont));
             innerTable42.addCell(fechafO);
             PdfPCell cellfechaf = new PdfPCell(innerTable42);
             cellfechaf.setBorder(PdfPCell.NO_BORDER);
@@ -835,17 +819,138 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell7);
-            PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));
+            PdfPCell cell8 = new PdfPCell(new Paragraph(txtJustificacion.getText(), normalFont));
             table2.addCell(cell8);
 
             PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
             cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell9);
-            PdfPCell cell10 = new PdfPCell(new Paragraph("MANTENIMIENTOS GENERALES", normalFont));
+            PdfPCell cell10 = new PdfPCell(new Paragraph(txtActividades.getText(), normalFont));
             cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
             table2.addCell(cell10);
 
             document.add(table2);
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void body1PDF(Document document, String servicioPrestado, File[] selectedFiles) {
+        PdfPTable tablename = new PdfPTable(1);
+        tablename.setWidthPercentage(100);
+        tablename.setPaddingTop(12);
+
+        PdfPCell space = new PdfPCell(new Paragraph(" ", normalBoldFont));
+        //space.setPadding(5);
+        space.setBorder(PdfPCell.NO_BORDER);
+        tablename.addCell(space);
+
+        // Crear la tabla principal
+        PdfPTable table = new PdfPTable(3);
+        // Crear la tabla principal
+        PdfPTable tablenam = new PdfPTable(1);
+
+        // Create the cell with the service name
+        PdfPCell nameserv = new PdfPCell(new Paragraph("1. " + servicioPrestado, normalBoldFont));
+        nameserv.setHorizontalAlignment(Element.ALIGN_CENTER);
+        nameserv.setBackgroundColor(BaseColor.LIGHT_GRAY);
+
+        // Add the nameserv cell to the tablename
+        tablename.addCell(nameserv);
+
+        try {
+            // ... other code to add images or tables
+            document.add(tablenam);
+        } catch (DocumentException ex) {
+            Logger.getLogger(frontInformes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            document.add(tablename);
+        } catch (DocumentException ex) {
+            Logger.getLogger(CreatePDFExample.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Crear una tabla de 3 columnas para las imágenes (independiente de cuántas imágenes se seleccionen)
+        int col = (selectedFiles.length / 10) + 4;
+        PdfPTable imageTable = new PdfPTable(col);
+        imageTable.setWidthPercentage(100); // Ajustar el ancho de la tabla
+        try {
+            imageTable.setWidths(new float[]{});  // Definir los anchos de las columnas
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        // Agregar las imágenes seleccionadas a la tabla
+        for (File file : selectedFiles) {
+            try {
+                Image img = Image.getInstance(file.getAbsolutePath());
+
+                // Controlar mejor la escala de las imágenes
+                float maxWidth = 100;  // Ancho máximo permiøtido
+                float maxHeight = 50; // Alto máximo permitido
+                float width = img.getWidth();
+                float height = img.getHeight();
+
+                // Calcular la relación de escala manteniendo el aspecto de la imagen
+                float scaleFactor = Math.min(maxWidth / width, maxHeight / height);
+                img.scaleAbsolute(width * scaleFactor, height * scaleFactor);
+
+                PdfPCell imageCell = new PdfPCell(img, true);
+                imageCell.setPadding(5);
+                imageCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                imageCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                imageTable.addCell(imageCell);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Si el número de imágenes seleccionadas no llena todas las columnas, agregar celdas vacías
+        int remainingCells = (col - (selectedFiles.length % col)) % col;
+        if (remainingCells != 0) {  // Solo añadir celdas vacías si es necesario
+            for (int i = 0; i < remainingCells; i++) {
+                imageTable.addCell(new PdfPCell());
+            }
+        }
+
+        try {
+            document.add(imageTable);  // Agregar la tabla de imágenes al documento
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void imprimir() {
+        File file = selectSaveLocation();
+        if (file == null) {
+            return;  // Salir si no se seleccionó ubicación para guardar el archivo
+        }
+
+        try {
+            // Crear el documento
+            Document document = new Document();
+
+            // Crear el PdfWriter con la ubicación seleccionada
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+
+            // Abrir el documento
+            document.open();
+
+            for (Map.Entry<String, File[]> entry : servicios.entrySet()) {
+                // Obtener el servicio y los archivos
+                String servicioPrestado = entry.getKey();
+                File[] selectedFiles = entry.getValue();
+                
+                headerPDF(document);
+
+                // Llamar a la función que crea el cuerpo para cada servicio
+                body1PDF(document, servicioPrestado, selectedFiles);
+
+                // Agregar una nueva página después de cada servicio si es necesario
+                document.newPage();
+            }
 
             // Cerrar el documento
             document.close();
@@ -920,7 +1025,6 @@ public class frontInformes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxCliente;
     private javax.swing.JMenuItem createClient;

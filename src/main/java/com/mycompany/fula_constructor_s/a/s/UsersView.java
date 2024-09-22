@@ -106,6 +106,11 @@ public class UsersView extends javax.swing.JFrame {
         btnAdminClient.setForeground(new java.awt.Color(150, 17, 52));
         btnAdminClient.setText("Administrador de Clientes");
         btnAdminClient.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        btnAdminClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminClientActionPerformed(evt);
+            }
+        });
         paneControl.add(btnAdminClient);
 
         btnSoporte.setBackground(new java.awt.Color(255, 254, 255));
@@ -113,6 +118,11 @@ public class UsersView extends javax.swing.JFrame {
         btnSoporte.setForeground(new java.awt.Color(150, 17, 52));
         btnSoporte.setText("Soporte");
         btnSoporte.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        btnSoporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSoporteActionPerformed(evt);
+            }
+        });
         paneControl.add(btnSoporte);
 
         menuLogOut.setText("Cerrar sesión");
@@ -202,6 +212,20 @@ public class UsersView extends javax.swing.JFrame {
         viewInformes.setVisible(true);
         this.hide();
     }//GEN-LAST:event_btnCreateInformeActionPerformed
+
+    private void btnSoporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoporteActionPerformed
+        // TODO add your handling code here:
+        SupportView view = new SupportView();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_btnSoporteActionPerformed
+
+    private void btnAdminClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminClientActionPerformed
+        // TODO add your handling code here:
+        ClientCreation view = new ClientCreation();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_btnAdminClientActionPerformed
 
     /**
      * @param args the command line arguments

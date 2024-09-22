@@ -21,6 +21,7 @@ public class ClientCreation extends javax.swing.JFrame {
 
     public ClientCreation() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**
@@ -54,33 +55,63 @@ public class ClientCreation extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 4, 12, 5));
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(150, 17, 52));
         jLabel2.setText("Nombre:");
         jPanel1.add(jLabel2);
+
+        clientNameTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        clientNameTxt.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(clientNameTxt);
 
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(150, 17, 52));
         jLabel6.setText("Identificacion:");
         jPanel1.add(jLabel6);
+
+        clientIdTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        clientIdTxt.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(clientIdTxt);
 
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(150, 17, 52));
         jLabel3.setText("Razón social:");
         jPanel1.add(jLabel3);
+
+        clientSocialReasonTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        clientSocialReasonTxt.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(clientSocialReasonTxt);
 
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(150, 17, 52));
         jLabel4.setText("Direccion:");
         jPanel1.add(jLabel4);
+
+        clientDirectionTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        clientDirectionTxt.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(clientDirectionTxt);
 
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(150, 17, 52));
         jLabel5.setText("Correo electronico:");
         jPanel1.add(jLabel5);
+
+        clientEmailTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        clientEmailTxt.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(clientEmailTxt);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(150, 17, 52));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Administrador de clientes");
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 12, 0));
 
+        createClientBttn.setBackground(new java.awt.Color(255, 254, 255));
+        createClientBttn.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        createClientBttn.setForeground(new java.awt.Color(150, 17, 52));
         createClientBttn.setText("Guardar");
+        createClientBttn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
         createClientBttn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createClientBttnActionPerformed(evt);
@@ -88,7 +119,11 @@ public class ClientCreation extends javax.swing.JFrame {
         });
         jPanel2.add(createClientBttn);
 
+        jButton1.setBackground(new java.awt.Color(255, 254, 255));
+        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(150, 17, 52));
         jButton1.setText("Buscar");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
         jPanel2.add(jButton1);
 
         menuBack.setText("Salir");
@@ -106,15 +141,15 @@ public class ClientCreation extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,10 +160,11 @@ public class ClientCreation extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     public void AddLine(String clientName, String clientId, String clientDirection, String clientSocialReason, String clientEmail) {
         try (FileWriter fw = new FileWriter("Clientes/clientes.txt", true)) {

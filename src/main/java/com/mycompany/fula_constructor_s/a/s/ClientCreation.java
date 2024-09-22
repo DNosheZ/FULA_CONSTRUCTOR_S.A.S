@@ -34,8 +34,6 @@ public class ClientCreation extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        clientNameTxt = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         clientIdTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -54,15 +52,6 @@ public class ClientCreation extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 4, 12, 5));
-
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel2.setText("Nombre:");
-        jPanel1.add(jLabel2);
-
-        clientNameTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        clientNameTxt.setForeground(new java.awt.Color(150, 17, 52));
-        jPanel1.add(clientNameTxt);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(150, 17, 52));
@@ -160,23 +149,22 @@ public class ClientCreation extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    public void AddLine(String clientName, String clientId, String clientDirection, String clientSocialReason, String clientEmail) {
+    public void AddLine(String clientId, String clientDirection, String clientSocialReason, String clientEmail) {
         try (FileWriter fw = new FileWriter("Clientes/clientes.txt", true)) {
             PrintWriter pw = new PrintWriter(fw);
-            pw.println(clientId + ";" + clientName + ";" + clientSocialReason + ";" + clientEmail + ";" + clientDirection);
+            pw.println(clientId + ";" + clientSocialReason + ";" + clientEmail + ";" + clientDirection);
         } catch (IOException e) {
 
         }
     }
 
     private void setInfo() {
-        name = clientNameTxt.getText();
         id = clientIdTxt.getText();
         address = clientDirectionTxt.getText();
         nameEmp = clientSocialReasonTxt.getText();
@@ -184,7 +172,6 @@ public class ClientCreation extends javax.swing.JFrame {
     }
     
     private void eraser(){
-        clientNameTxt.setText("");
         clientIdTxt.setText("");
         clientDirectionTxt.setText("");
         clientSocialReasonTxt.setText("");
@@ -194,7 +181,7 @@ public class ClientCreation extends javax.swing.JFrame {
     private void saveCliente() {
         this.setInfo();
 
-        if (!name.isEmpty() && !id.isEmpty() && !address.isEmpty() && !nameEmp.isEmpty() && !email.isEmpty()) {
+        if (!id.isEmpty() && !address.isEmpty() && !nameEmp.isEmpty() && !email.isEmpty()) {
             RandomAccessFile raf = null;
             try {
                 String clientString;//fila de la base de datos
@@ -232,7 +219,7 @@ public class ClientCreation extends javax.swing.JFrame {
                     }
                 }
                 if (!clientExists) {
-                    AddLine(name, id, address, nameEmp, email);
+                    AddLine(id, address, nameEmp, email);
                     JOptionPane.showMessageDialog(null, "Cliente creado correctamente");
                     eraser();
                 }
@@ -306,12 +293,10 @@ public class ClientCreation extends javax.swing.JFrame {
     private javax.swing.JTextField clientDirectionTxt;
     private javax.swing.JTextField clientEmailTxt;
     private javax.swing.JTextField clientIdTxt;
-    private javax.swing.JTextField clientNameTxt;
     private javax.swing.JTextField clientSocialReasonTxt;
     private javax.swing.JButton createClientBttn;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

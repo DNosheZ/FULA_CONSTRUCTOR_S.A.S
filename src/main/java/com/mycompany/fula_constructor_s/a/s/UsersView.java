@@ -5,6 +5,7 @@
 package com.mycompany.fula_constructor_s.a.s;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -52,83 +53,67 @@ public class UsersView extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        paneControl = new javax.swing.JPanel();
-        btnNewInforme = new javax.swing.JButton();
-        btnSearchInforme = new javax.swing.JButton();
-        btnStateInforme = new javax.swing.JButton();
-        btnCreateClient = new javax.swing.JButton();
-        btnSupport = new javax.swing.JButton();
-        lblUserName = new javax.swing.JLabel();
         imgLogo = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
+        paneControl = new javax.swing.JPanel();
+        btnCreateInforme = new javax.swing.JButton();
+        btnVerInforme = new javax.swing.JButton();
+        btnAdminClient = new javax.swing.JButton();
+        btnSoporte = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuLogOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 228, 228));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(new java.awt.Color(255, 255, 255));
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(150, 17, 52));
         jLabel2.setText("FULA CONSTRUCTOR SAS");
 
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(150, 17, 52));
         jLabel3.setText("901224360-7");
+
+        lblUserName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(150, 17, 52));
+        lblUserName.setText("userName");
 
         paneControl.setLayout(new java.awt.GridLayout(0, 3, 12, 12));
 
-        btnNewInforme.setBackground(new java.awt.Color(153, 0, 63));
-        btnNewInforme.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnNewInforme.setForeground(new java.awt.Color(255, 255, 255));
-        btnNewInforme.setText("Crear nuevo informe");
-        btnNewInforme.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateInforme.setBackground(new java.awt.Color(255, 254, 255));
+        btnCreateInforme.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnCreateInforme.setForeground(new java.awt.Color(150, 17, 52));
+        btnCreateInforme.setText("Crear Informe");
+        btnCreateInforme.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        btnCreateInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewInformeActionPerformed(evt);
+                btnCreateInformeActionPerformed(evt);
             }
         });
-        paneControl.add(btnNewInforme);
+        paneControl.add(btnCreateInforme);
 
-        btnSearchInforme.setBackground(new java.awt.Color(153, 0, 63));
-        btnSearchInforme.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnSearchInforme.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearchInforme.setText("Buscar informe");
-        btnSearchInforme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchInformeActionPerformed(evt);
-            }
-        });
-        paneControl.add(btnSearchInforme);
+        btnVerInforme.setBackground(new java.awt.Color(255, 254, 255));
+        btnVerInforme.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnVerInforme.setForeground(new java.awt.Color(150, 17, 52));
+        btnVerInforme.setText("Ver informes");
+        btnVerInforme.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        paneControl.add(btnVerInforme);
 
-        btnStateInforme.setBackground(new java.awt.Color(153, 0, 63));
-        btnStateInforme.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnStateInforme.setForeground(new java.awt.Color(255, 255, 255));
-        btnStateInforme.setText("Estado de informes");
-        btnStateInforme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStateInformeActionPerformed(evt);
-            }
-        });
-        paneControl.add(btnStateInforme);
+        btnAdminClient.setBackground(new java.awt.Color(255, 254, 255));
+        btnAdminClient.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnAdminClient.setForeground(new java.awt.Color(150, 17, 52));
+        btnAdminClient.setText("Administrador de Clientes");
+        btnAdminClient.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        paneControl.add(btnAdminClient);
 
-        btnCreateClient.setBackground(new java.awt.Color(153, 0, 63));
-        btnCreateClient.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnCreateClient.setForeground(new java.awt.Color(255, 255, 255));
-        btnCreateClient.setText("Crear cliente");
-        btnCreateClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateClientActionPerformed(evt);
-            }
-        });
-        paneControl.add(btnCreateClient);
-
-        btnSupport.setBackground(new java.awt.Color(153, 0, 63));
-        btnSupport.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnSupport.setForeground(new java.awt.Color(255, 255, 255));
-        btnSupport.setText("Soporte");
-        btnSupport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actionPerformed(evt);
-            }
-        });
-        paneControl.add(btnSupport);
-
-        lblUserName.setText("userName");
+        btnSoporte.setBackground(new java.awt.Color(255, 254, 255));
+        btnSoporte.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnSoporte.setForeground(new java.awt.Color(150, 17, 52));
+        btnSoporte.setText("Soporte");
+        btnSoporte.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        paneControl.add(btnSoporte);
 
         menuLogOut.setText("Cerrar sesión");
         menuLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -145,40 +130,33 @@ public class UsersView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(474, 474, 474)
                         .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lblUserName)
-                                    .addGap(773, 773, 773))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                    .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap(56, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(lblUserName))
-                    .addComponent(imgLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(53, 53, 53)
-                .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                    .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(paneControl, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
 
         pack();
@@ -203,9 +181,7 @@ public class UsersView extends javax.swing.JFrame {
 
     private void btnNewInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewInformeActionPerformed
         // TODO add your handling code here:
-        frontInformes viewInformes = new frontInformes(this.userName);
-        viewInformes.setVisible(true);
-        this.hide();
+        
     }//GEN-LAST:event_btnNewInformeActionPerformed
 
     private void menuLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLogOutMouseClicked
@@ -214,10 +190,18 @@ public class UsersView extends javax.swing.JFrame {
         view.setVisible(true);
         this.hide();
     }//GEN-LAST:event_menuLogOutMouseClicked
+   
 
     private void btnCreateClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateClientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCreateClientActionPerformed
+
+    private void btnCreateInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateInformeActionPerformed
+        // TODO add your handling code here:
+        frontInformes viewInformes = new frontInformes(this.userName);
+        viewInformes.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_btnCreateInformeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,11 +246,10 @@ public class UsersView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCreateClient;
-    private javax.swing.JButton btnNewInforme;
-    private javax.swing.JButton btnSearchInforme;
-    private javax.swing.JButton btnStateInforme;
-    private javax.swing.JButton btnSupport;
+    private javax.swing.JButton btnAdminClient;
+    private javax.swing.JButton btnCreateInforme;
+    private javax.swing.JButton btnSoporte;
+    private javax.swing.JButton btnVerInforme;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

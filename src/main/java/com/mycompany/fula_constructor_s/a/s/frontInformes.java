@@ -503,31 +503,27 @@ public class frontInformes extends javax.swing.JFrame {
     public void saveInforme() {
         // Generar el nombre del archivo único (puedes usar numInforme o un timestamp)
         String nombreArchivo = "informe_" + numInforme + ".txt";
-        
+
         try {
-            // Crear el FileWriter
-            FileWriter writer = new FileWriter("Informes/"+nombreArchivo,true);
-            PrintWriter pw = new PrintWriter(writer);
-            
-            
-            // Escribir los atributos principales separados por |
-            pw.println(Cliente + "|" + numInforme + "|" + fechaInicio + "|" + fechaFin + "|" + ubicacion + "|"
-                    + justificacion + "|" + actividades + "|" + nameRes + "|" + numRes);
+            try ( // Crear el FileWriter
+                    FileWriter writer = new FileWriter("Informes/" + nombreArchivo, true)) {
+                PrintWriter pw = new PrintWriter(writer);
+                // Escribir los atributos principales separados por |
+                pw.println(Cliente + "|" + numInforme + "|" + fechaInicio + "|" + fechaFin + "|" + ubicacion + "|"
+                        + justificacion + "|" + actividades + "|" + nameRes + "|" + numRes);
+                // Recorrer el HashMap y escribir las claves y archivos
+                for (String clave : servicios.keySet()) {
+                    pw.print(clave);  // Escribir la clave
 
-            // Recorrer el HashMap y escribir las claves y archivos
-            for (String clave : servicios.keySet()) {
-                pw.print(clave);  // Escribir la clave
+                    // Escribir los archivos asociados a la clave
+                    for (File archivo : servicios.get(clave)) {
+                        writer.write("|" + archivo.getAbsolutePath());  // Escribir la ruta del archivo
+                    }
 
-                // Escribir los archivos asociados a la clave
-                for (File archivo : servicios.get(clave)) {
-                    writer.write("|" + archivo.getAbsolutePath());  // Escribir la ruta del archivo
+                    pw.print("\n");  // Nueva línea para cada clave
                 }
-
-                pw.print("\n");  // Nueva línea para cada clave
+                // Cerrar el escritor
             }
-
-            // Cerrar el escritor
-            writer.close();
             System.out.println("Informe guardado como: " + nombreArchivo);
         } catch (IOException e) {
             System.out.println("Ocurrió un error al guardar el informe.");

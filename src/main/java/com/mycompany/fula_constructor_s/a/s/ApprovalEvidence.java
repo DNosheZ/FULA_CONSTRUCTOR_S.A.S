@@ -8,7 +8,11 @@ package com.mycompany.fula_constructor_s.a.s;
  *
  * @author Administrator
  */
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 public class ApprovalEvidence extends javax.swing.JFrame {
@@ -42,7 +46,7 @@ public class ApprovalEvidence extends javax.swing.JFrame {
         Logotipo = new javax.swing.JLabel();
         InformeNumberForInformBttn = new javax.swing.JRadioButton();
         clientNameForInformBttn = new javax.swing.JRadioButton();
-        searchInforme = new javax.swing.JTextField();
+        searchInformeTxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,9 +109,9 @@ public class ApprovalEvidence extends javax.swing.JFrame {
             }
         });
 
-        searchInforme.addActionListener(new java.awt.event.ActionListener() {
+        searchInformeTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchInformeActionPerformed(evt);
+                searchInformeTxtActionPerformed(evt);
             }
         });
 
@@ -142,7 +146,7 @@ public class ApprovalEvidence extends javax.swing.JFrame {
                                                 .addComponent(clientNameForInformBttn))
                                             .addComponent(InformeNumberForInformBttn, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(30, 30, 30)
-                                        .addComponent(searchInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchInformeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ButtonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(26, 26, 26))
@@ -173,7 +177,7 @@ public class ApprovalEvidence extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(searchInforme)
+                            .addComponent(searchInformeTxt)
                             .addComponent(ButtonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -203,7 +207,7 @@ public class ApprovalEvidence extends javax.swing.JFrame {
     private void ButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonBuscarActionPerformed
         // TODO add your handling code here:
         // Obtener el texto ingresado en el JTextField
-        String searchValue = searchInforme.getText().trim();
+        String searchValue = searchInformeTxt.getText().trim();
 
         // Verificar cuál radio button está seleccionado
         if (clientNameForInformBttn.isSelected()) {
@@ -216,9 +220,9 @@ public class ApprovalEvidence extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ButtonBuscarActionPerformed
 
-    private void searchInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInformeActionPerformed
+    private void searchInformeTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchInformeTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchInformeActionPerformed
+    }//GEN-LAST:event_searchInformeTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,28 +261,36 @@ public class ApprovalEvidence extends javax.swing.JFrame {
     
     private void revisarArchivos(String tipoBusqueda, String searchValue) {
         // Ruta a la carpeta que contiene los archivos
-        File carpeta = new File("ruta/de/la/carpeta/con/los/archivos");
-
+        File carpeta = new File("C:\\Users\\Windows\\Documents\\NetBeansProjects\\FULA_CONSTRUCTOR_S.A.S\\informes");
+        
         // Verificar que la carpeta exista
         if (carpeta.isDirectory()) {
             // Obtener la lista de archivos en la carpeta
+            
             File[] archivos = carpeta.listFiles((dir, name) -> name.endsWith(".txt"));
-
             // Revisar cada archivo en la carpeta
             for (File archivo : archivos) {
+                
                 // Dividir el nombre del archivo por el guión bajo
                 String[] lineSplit = archivo.getName().split("_");
-
+                //["informe",numInforme,Cliente,".txt"]
+                System.out.println("Leyendo archivo: " +lineSplit[1]+" "+lineSplit[2]);
                 // Verificar la condición según el tipo de búsqueda
                 if (tipoBusqueda.equals("client")) {
                     // Revisar el tercer valor del nombre del archivo
+                    
+                    
                     if (lineSplit.length > 2 && lineSplit[2].equals(searchValue)) {
                         //querre agregar este archivo al jPanel que los contiene
+                        
+                        leerYProcesarArchivo(archivo, lineSplit[1], lineSplit[2]);
                     }
                 } else if (tipoBusqueda.equals("informe")) {
-                    // Revisar el segundo valor del nombre del archivo
+                    
+                    //"Informe # "+lineSplit[1]+" de "+lineSplit[2]
                     if (lineSplit.length > 1 && lineSplit[1].equals(searchValue)) {
                         //querre agregar este archivo al jPanel que los contiene
+                        leerYProcesarArchivo(archivo, lineSplit[1], lineSplit[2]);
                     }
                 }
             }
@@ -286,25 +298,45 @@ public class ApprovalEvidence extends javax.swing.JFrame {
             System.out.println("La carpeta especificada no existe.");
         }
     }
-    //modificar y usar lo siguiente para agregar informes al informsPanel
-//    private void addInform(String service) {
-//
-//        JLabel lblService = new JLabel();
-//
-//        if (!service.isEmpty() && !this.servicios.containsKey(service)) {
-//            File[] file = selectFiles();
-//            this.servicios.put(service, file);
-//
-//            lblService.setText(service + " : " + "(" + file.length + " archivos adjuntos)");
-//            this.paneServices.add(lblService);
-//
-//            txtServicio.setText("");
-//
-//        } else {
-//            JOptionPane.showMessageDialog(null, "EL servicio ya existe o esta vacio");
-//        }
-//
-//    }
+    private void leerYProcesarArchivo(File archivo, String numeroInforme, String nombreCliente) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            informsPanel.removeAll();  
+            // Leer solo la primera línea del archivo
+            String linea = br.readLine(); 
+
+            // Verificar si se ha leído una línea
+            if (linea != null) {
+                // Dividir el contenido de la línea usando '|'
+                String[] contenidoSplit = linea.split("\\|");
+
+                // Verificar si el array tiene exactamente 10 elementos (para que contenidoSplit[9] exista)
+                System.out.println("Tamaño del split: " + contenidoSplit.length);
+                if (contenidoSplit.length == 10) {
+                    // Verificar si contenidoSplit[9] es igual a 'SV'
+                    
+                    if (contenidoSplit[9].equals("SV")) {
+                        // Crear un JLabel con la información
+                        JLabel lblService = new JLabel("Informe # " + numeroInforme + " de " + nombreCliente + " (No validado)");
+
+                        // Asegurar que informsPanel tenga un layout que permita añadir componentes
+                        informsPanel.setLayout(new BoxLayout(informsPanel, BoxLayout.Y_AXIS));
+
+                        // Agregar el JLabel al JPanel
+                        informsPanel.add(lblService);
+
+                        // Actualizar el JPanel
+                        informsPanel.revalidate();
+                        informsPanel.repaint();
+                    }
+                } else {
+                    System.out.println("La línea no contiene exactamente 10 elementos: " + linea);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonBuscar;
     private javax.swing.JButton ButtonVolver;
@@ -319,6 +351,6 @@ public class ApprovalEvidence extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField searchInforme;
+    private javax.swing.JTextField searchInformeTxt;
     // End of variables declaration//GEN-END:variables
 }

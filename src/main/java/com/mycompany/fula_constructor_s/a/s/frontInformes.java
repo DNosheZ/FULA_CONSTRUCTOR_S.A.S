@@ -23,6 +23,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import java.io.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import javax.swing.ImageIcon;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
 /**
  *
@@ -108,8 +111,6 @@ public class frontInformes extends javax.swing.JFrame {
         txtServicio = new javax.swing.JTextField();
         paneScroll = new javax.swing.JScrollPane();
         paneServices = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
         cbxCliente = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         txtNameRes = new javax.swing.JTextField();
@@ -119,13 +120,14 @@ public class frontInformes extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         menuArchivo = new javax.swing.JMenu();
         mNewInforme = new javax.swing.JMenu();
         mSaveInforme = new javax.swing.JMenu();
         mDownloadPDF = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        mPreview = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         mCreateClient = new javax.swing.JMenu();
@@ -197,19 +199,6 @@ public class frontInformes extends javax.swing.JFrame {
         paneServices.setLayout(new java.awt.GridLayout(0, 1));
         paneScroll.setViewportView(paneServices);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
-
-        jButton3.setBackground(new java.awt.Color(255, 254, 255));
-        jButton3.setForeground(new java.awt.Color(150, 17, 52));
-        jButton3.setText("Enviar para aprobación");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3);
-
         cbxCliente.setBackground(new java.awt.Color(255, 254, 255));
         cbxCliente.setForeground(new java.awt.Color(150, 17, 52));
         cbxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar cliente" }));
@@ -261,6 +250,8 @@ public class frontInformes extends javax.swing.JFrame {
         });
         paneActivitys1.add(btnDelete);
 
+        jSeparator1.setForeground(new java.awt.Color(150, 17, 52));
+
         jMenu2.setText("Salir");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -295,8 +286,13 @@ public class frontInformes extends javax.swing.JFrame {
         });
         menuArchivo.add(mDownloadPDF);
 
-        jMenu3.setText("Ver vista previa");
-        menuArchivo.add(jMenu3);
+        mPreview.setText("Ver vista previa");
+        mPreview.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mPreviewMouseClicked(evt);
+            }
+        });
+        menuArchivo.add(mPreview);
 
         jMenu5.setText("Enviar informe por e-mail");
         menuArchivo.add(jMenu5);
@@ -326,7 +322,7 @@ public class frontInformes extends javax.swing.JFrame {
                 .addGap(207, 207, 207)
                 .addComponent(jLabel10))
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,57 +336,55 @@ public class frontInformes extends javax.swing.JFrame {
                                 .addComponent(lblToday)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(paneScroll)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(paneActivitys1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(470, 470, 470)
+                                .addComponent(jLabel15)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(paneActivitys1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel19)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(470, 470, 470)
-                                        .addComponent(jLabel15)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel14))
+                                        .addGap(28, 28, 28)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel19)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel11)
-                                                    .addComponent(jLabel14))
-                                                .addGap(28, 28, 28)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                                    .addComponent(txtNumInforme, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                                    .addComponent(cbxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                            .addComponent(jLabel17)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jLabel16)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                                .addComponent(txtNameRes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(txtUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                            .addComponent(txtNumInforme, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                            .addComponent(cbxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel17)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                        .addComponent(txtNameRes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel20)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNumRes, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel12))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel20)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtNumRes, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel13)
-                                                    .addComponent(jLabel12))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addComponent(jLabel18))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(74, 74, 74))))
+                                            .addComponent(dateInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(dateFin, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jLabel18)
+                            .addComponent(jSeparator1)
+                            .addComponent(paneScroll, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap(74, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,7 +416,7 @@ public class frontInformes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNameRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16)
@@ -440,17 +434,17 @@ public class frontInformes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
                             .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(42, 42, 42)
+                .addGap(31, 31, 31)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel18)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(paneActivitys1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtServicio, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                    .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addComponent(paneScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -458,7 +452,7 @@ public class frontInformes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addService(String service) {
-        
+
         JLabel lblService = new JLabel();
 
         if (!service.isEmpty() && !this.servicios.containsKey(service)) {
@@ -556,7 +550,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     public void saveInforme() {
         // Generar el nombre del archivo único (puedes usar numInforme o un timestamp)
-        String nombreArchivo = "informe_" + numInforme +"_"+Cliente+ "_.txt";
+        String nombreArchivo = "informe_" + numInforme + "_" + Cliente + ".txt";
 
         try {
             try ( // Crear el FileWriter
@@ -639,13 +633,67 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void deleteService() {
         String servicio = txtServicio.getText();
-        if (servicio != null) {
+        if (servicio != null && !servicio.isEmpty()) {
             servicios.remove(servicio);
             updatePane(); // Actualizamos la lista visual
             JOptionPane.showMessageDialog(null, "Servicio eliminado.");
         } else {
             JOptionPane.showMessageDialog(null, "El campo esta vacio.");
         }
+    }
+
+    // Método para actualizar un servicio
+    private void updateService() {
+        String servicio = txtServicio.getText().trim();
+
+        if (!servicio.isEmpty()) {
+            // Opciones a mostrar
+            String[] opciones = {"Cambiar Nombre", "Cambiar Descripción", "Cancelar"};
+
+            // Mostrar el OptionDialog
+            int seleccion = JOptionPane.showOptionDialog(
+                    null,
+                    "Seleccione una opción:",
+                    "Opciones de Servicio",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
+            );
+
+            // Procesar la selección
+            switch (seleccion) {
+                case 0 -> {
+                    // Cambiar Nombre
+                    String newServ = JOptionPane.showInputDialog(null, "Ingrese un valor:", "Entrada de valor", JOptionPane.PLAIN_MESSAGE);
+                    if (!newServ.isEmpty()) {
+                        servicios.put(newServ, servicios.get(servicio)); // Añadimos el actualizado
+                        servicios.remove(servicio);  // Eliminamos el anterior
+                        updatePane();
+                        txtServicio.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione un servicio y escriba el nuevo nombre.");
+                    }
+                }
+
+                case 1 -> {
+                    // Cambiar Descripción
+                    servicios.remove(servicio);
+                    addService(servicio);
+                    updatePane();
+                }
+
+                case 2 -> // Cancelar
+                    System.out.println("Operación cancelada.");
+
+                default ->
+                    System.out.println("No se seleccionó ninguna opción.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un servicio");
+        }
+
     }
 
     private void updatePane() {
@@ -669,6 +717,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        updateService();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void mNewInformeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mNewInformeMouseClicked
@@ -692,8 +741,8 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void mDownloadPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDownloadPDFMouseClicked
         // TODO add your handling code here:
-
-        imprimir();
+        File file = selectSaveLocation();
+        imprimir(file);
     }//GEN-LAST:event_mDownloadPDFMouseClicked
 
     private void mCreateClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mCreateClientMouseClicked
@@ -703,9 +752,55 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_mCreateClientMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void mostrarPdfEnVentana(PDDocument document) throws IOException {
+        // Crear un JDialog para mostrar las imágenes
+        JDialog dialogo = new JDialog();
+        dialogo.setTitle("Vista previa del PDF");
+        dialogo.setSize(600, 800);
+        dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialogo.setLocationRelativeTo(null);
+
+        // Crear un JPanel para contener las imágenes
+        JPanel panelImagenes = new JPanel();
+        panelImagenes.setLayout(new BoxLayout(panelImagenes, BoxLayout.Y_AXIS)); // Para apilar verticalmente
+
+        // Renderizar cada página y añadirla al panel
+        PDFRenderer pdfRenderer = new PDFRenderer(document);
+        for (int i = 0; i < document.getNumberOfPages(); i++) {
+            BufferedImage image = pdfRenderer.renderImageWithDPI(i, 100); // Renderizar a 100 DPI
+            ImageIcon icono = new ImageIcon(image.getScaledInstance(600, -1, java.awt.Image.SCALE_SMOOTH)); // Ajustar el ancho y mantener la relación de aspecto
+            JLabel etiquetaImagen = new JLabel(icono);
+            panelImagenes.add(etiquetaImagen); // Añadir la imagen al panel
+        }
+
+        // Añadir el panel de imágenes a un JScrollPane para permitir el desplazamiento
+        JScrollPane scrollPane = new JScrollPane(panelImagenes);
+        dialogo.add(scrollPane);
+
+        // Hacer el diálogo modal
+        dialogo.setModal(true);
+
+        // Mostrar el diálogo
+        dialogo.setVisible(true);
+    }
+
+    private void mPreviewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mPreviewMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        try {
+            // Cargar el documento PDF
+            File file = new File("temp/informe.pdf");
+            imprimir(file);
+            PDDocument document = PDDocument.load(file);
+
+
+            // Mostrar el PDF en una ventana
+            mostrarPdfEnVentana(document);
+
+            document.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_mPreviewMouseClicked
 
     /**
      *
@@ -968,112 +1063,110 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPTable table = new PdfPTable(1);
             table.setWidthPercentage(100);
             table.setPaddingTop(12);
-            
+
             PdfPCell space = new PdfPCell(new Paragraph(" ", normalBoldFont));
             //space.setPadding(5);
             space.setBorder(PdfPCell.NO_BORDER);
             table.addCell(space);
-            
+
             PdfPCell title1 = new PdfPCell(new Paragraph("DE MANERA ADICIONAL A LA ENTREGA:", normalBoldFont));
             table.addCell(title1);
-            
+
             PdfPCell space2 = new PdfPCell(new Paragraph(" ", normalBoldFont));
             table.addCell(space2);
-            
+
             PdfPCell title2 = new PdfPCell(new Paragraph("DOCUMENTACIÓN ENTREGADA", normalBoldFont));
             table.addCell(title2);
-            
+
             PdfPCell cot = new PdfPCell(new Paragraph("Cotización", normalFont));
             table.addCell(cot);
-            
+
             PdfPCell arl = new PdfPCell(new Paragraph("Certificado ARL vigente titular y subcontratistas y/o dependientes", normalFont));
             table.addCell(arl);
-            
+
             PdfPCell afp = new PdfPCell(new Paragraph("Certificado AFP vigente titular y subcontratistas y/o dependientes", normalFont));
             table.addCell(afp);
-            
+
             PdfPCell eps = new PdfPCell(new Paragraph("Certificado EPS vigente titular y subcontratistas y/o dependientes", normalFont));
             table.addCell(eps);
-            
+
             PdfPCell ca = new PdfPCell(new Paragraph("Carnet manejo de alturas", normalFont));
             table.addCell(ca);
-            
+
             PdfPCell er = new PdfPCell(new Paragraph("Certificado de existencia y representación legal", normalFont));
             table.addCell(er);
-            
+
             PdfPCell cb = new PdfPCell(new Paragraph("Certificación bancaria", normalFont));
             table.addCell(cb);
-            
+
             PdfPCell factura = new PdfPCell(new Paragraph("Factura", normalFont));
             table.addCell(factura);
-            
+
             PdfPCell title3 = new PdfPCell(new Paragraph("VALIDACIÓN DE VISITA", normalBoldFont));
             table.addCell(title3);
-            
+
             PdfPTable innerTable = new PdfPTable(1);
             innerTable.setWidthPercentage(100);
-            
+
             innerTable.addCell(space);
-            
+
             PdfPCell val = new PdfPCell(new Paragraph("Válido la visita correspondiente, del proveedor o contratista FULA CONSTRUCTOR S.A.S., visita que fue bajo mi supervisión, para dar claridad de lo necesitado.", normalFont));
             val.setBorder(PdfPCell.NO_BORDER);
             innerTable.addCell(val);
-            
+
             innerTable.addCell(space);
-            
+
             PdfPCell att = new PdfPCell(new Paragraph("Atentamente:", normalFont));
             att.setBorder(PdfPCell.NO_BORDER);
             innerTable.addCell(att);
-            
+
             PdfPCell namer = new PdfPCell(new Paragraph("Nombre: " + nameRes, normalFont));
             namer.setBorder(PdfPCell.NO_BORDER);
             innerTable.addCell(namer);
-            
+
             PdfPCell numr = new PdfPCell(new Paragraph("Telefono: " + numRes, normalFont));
             numr.setBorder(PdfPCell.NO_BORDER);
             innerTable.addCell(numr);
-            
+
             innerTable.addCell(space);
-            
+
             PdfPTable firmas = new PdfPTable(2);
             firmas.setWidthPercentage(100);
-            
+
             PdfPCell firmaR = new PdfPCell(new Paragraph(" ", normalFont));
             firmas.addCell(firmaR);
-            
-                        
+
             com.itextpdf.text.Image firmaImg = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/firma.png");  // Cambia la ruta por tu imagen
             firmaImg.scaleToFit(100, 50);
             PdfPCell cell1 = new PdfPCell(firmaImg);
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);  // Centrar la imagen en la celda
             cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
             firmas.addCell(cell1);
-            
+
             PdfPCell firmaRN = new PdfPCell(new Paragraph("FIRMA RECIBIDO", normalFont));
-            firmaRN.setHorizontalAlignment(Element.ALIGN_CENTER); 
+            firmaRN.setHorizontalAlignment(Element.ALIGN_CENTER);
             firmas.addCell(firmaRN);
-            
+
             PdfPCell firmaGN = new PdfPCell(new Paragraph("HEYESMID FULA MONTENEGRO\nGERENTE", normalFont));
-            firmaGN.setHorizontalAlignment(Element.ALIGN_CENTER); 
+            firmaGN.setHorizontalAlignment(Element.ALIGN_CENTER);
             firmas.addCell(firmaGN);
-            
+
             PdfPCell cfirmas = new PdfPCell(firmas);
             innerTable.addCell(cfirmas);
-            
+
             PdfPCell validate = new PdfPCell(innerTable);
             table.addCell(validate);
-            
+
             document.add(table);
         } catch (DocumentException ex) {
             Logger.getLogger(frontInformes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void imprimir() {
-        
+    public void imprimir(File file) {
+
         setInfo();
-        
-        File file = selectSaveLocation();
+
         if (file == null) {
             return;  // Salir si no se seleccionó ubicación para guardar el archivo
         }
@@ -1104,7 +1197,7 @@ public class frontInformes extends javax.swing.JFrame {
                 // Agregar una nueva página después de cada servicio si es necesario
                 document.newPage();
             }
-            
+
             headerPDF(document);
             body2PDF(document);
             // Cerrar el documento
@@ -1185,7 +1278,6 @@ public class frontInformes extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateFin;
     private com.toedter.calendar.JDateChooser dateInicio;
     private javax.swing.JLabel imgLogo;
-    private javax.swing.JButton jButton3;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1201,15 +1293,15 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblToday;
     private javax.swing.JMenu mCreateClient;
     private javax.swing.JMenu mDownloadPDF;
     private javax.swing.JMenu mNewInforme;
+    private javax.swing.JMenu mPreview;
     private javax.swing.JMenu mSaveInforme;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JPanel paneActivitys1;
@@ -1223,4 +1315,5 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JTextField txtServicio;
     private javax.swing.JTextField txtUbicacion;
     // End of variables declaration//GEN-END:variables
+
 }

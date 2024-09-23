@@ -659,7 +659,7 @@ public class frontInformes extends javax.swing.JFrame {
             lblService.setText(servicioPrestado + " : " + "(" + selectedFiles.length + " archivos adjuntos)");
             this.paneServices.add(lblService);
         }
-        this.paneServices.repaint();
+        this.paneServices.revalidate();
     }
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

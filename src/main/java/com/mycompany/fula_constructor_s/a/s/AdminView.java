@@ -93,6 +93,11 @@ public class AdminView extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(150, 17, 52));
         jButton3.setText("Buscar informes");
         jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 3, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         paneControl.add(jButton3);
 
         jButton1.setBackground(new java.awt.Color(255, 254, 255));
@@ -181,6 +186,9 @@ public class AdminView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ApprovalEvidence view=new ApprovalEvidence();
+        view.setVisible(true);
+        this.hide();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -196,6 +204,10 @@ public class AdminView extends javax.swing.JFrame {
         view.setVisible(true);
         this.hide();
     }//GEN-LAST:event_menuLogOutActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

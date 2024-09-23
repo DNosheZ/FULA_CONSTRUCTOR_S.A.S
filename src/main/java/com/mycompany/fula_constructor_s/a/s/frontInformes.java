@@ -453,7 +453,7 @@ public class frontInformes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addService(String service) {
-
+        
         JLabel lblService = new JLabel();
 
         if (!service.isEmpty() && !this.servicios.containsKey(service)) {
@@ -551,7 +551,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     public void saveInforme() {
         // Generar el nombre del archivo único (puedes usar numInforme o un timestamp)
-        String nombreArchivo = "informe_" + numInforme + ".txt";
+        String nombreArchivo = "informe_" + numInforme +"_"+Cliente+ "_.txt";
 
         try {
             try ( // Crear el FileWriter

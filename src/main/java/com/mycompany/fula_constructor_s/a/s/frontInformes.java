@@ -452,8 +452,8 @@ public class frontInformes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addService() {
-        String service = txtServicio.getText().trim();
+    private void addService(String service) {
+
         JLabel lblService = new JLabel();
 
         if (!service.isEmpty() && !this.servicios.containsKey(service)) {
@@ -488,7 +488,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-        addService();
+        addService(txtServicio.getText().trim());
 
         paneScroll.revalidate();
 
@@ -637,9 +637,34 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_createClientMouseClicked
 
+    private void deleteService() {
+        String servicio = txtServicio.getText();
+        if (servicio != null) {
+            servicios.remove(servicio);
+            updatePane(); // Actualizamos la lista visual
+            JOptionPane.showMessageDialog(null, "Servicio eliminado.");
+        } else {
+            JOptionPane.showMessageDialog(null, "El campo esta vacio.");
+        }
+    }
+
+    private void updatePane() {
+        this.paneServices.removeAll();
+        
+        for (Map.Entry<String, File[]> entry : servicios.entrySet()) {
+            JLabel lblService = new JLabel();
+            String servicioPrestado = entry.getKey();
+            File[] selectedFiles = entry.getValue();
+            
+            lblService.setText(servicioPrestado + " : " + "(" + selectedFiles.length + " archivos adjuntos)");
+            this.paneServices.add(lblService);
+        }
+        this.paneServices.repaint();
+    }
+
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        
+        deleteService();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -667,7 +692,7 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void mDownloadPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mDownloadPDFMouseClicked
         // TODO add your handling code here:
-        
+
         imprimir();
     }//GEN-LAST:event_mDownloadPDFMouseClicked
 
@@ -942,7 +967,7 @@ public class frontInformes extends javax.swing.JFrame {
                 // Obtener el servicio y los archivos
                 String servicioPrestado = entry.getKey();
                 File[] selectedFiles = entry.getValue();
-                
+
                 headerPDF(document);
 
                 // Llamar a la función que crea el cuerpo para cada servicio

@@ -36,6 +36,15 @@ public final class User {
      */
     public User() {
     }
+
+    public User(String userId) {
+        this.userId = userId;
+    }
+    
+    public User userLog(User user,String userId){
+        user.setUserId(userId);
+        return user;
+    }
     
     /**
      *

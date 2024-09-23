@@ -223,7 +223,7 @@ public class SupportView extends javax.swing.JFrame {
             transport.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
             transport.close();
             
-            JOptionPane.showMessageDialog(null, "El correo se envio correctamente");
+            JOptionPane.showMessageDialog(null, "El correo se envió correctamente");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al enviar el correo");
         }

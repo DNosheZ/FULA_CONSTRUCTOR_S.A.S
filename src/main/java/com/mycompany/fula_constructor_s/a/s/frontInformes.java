@@ -128,7 +128,7 @@ public class frontInformes extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
-        createClient = new javax.swing.JMenuItem();
+        mCreateClient = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,7 +148,7 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel11.setText("Informe de obra numero:");
+        jLabel11.setText("Informe de obra número:");
 
         txtNumInforme.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -158,14 +158,14 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel13.setText("Fecha de finalizacion");
+        jLabel13.setText("Fecha de finalización");
 
         dateFin.setForeground(new java.awt.Color(150, 17, 52));
         dateFin.setDateFormatString("dd/MM/yyyy");
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel14.setText("Ubicacion de la obra");
+        jLabel14.setText("Ubicación de la obra");
 
         txtUbicacion.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -190,7 +190,7 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel18.setText("Descripcion de la actividad");
+        jLabel18.setText("Descripción de la actividad");
 
         txtServicio.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -201,8 +201,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(255, 254, 255));
         jButton3.setForeground(new java.awt.Color(150, 17, 52));
-        jButton3.setText("Enviar para aprobacion");
+        jButton3.setText("Enviar para aprobación");
         jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
 
         cbxCliente.setBackground(new java.awt.Color(255, 254, 255));
@@ -211,13 +216,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel19.setText("Justificacion de la obra");
+        jLabel19.setText("Justificación de la obra");
 
         txtNameRes.setForeground(new java.awt.Color(150, 17, 52));
 
         jLabel20.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel20.setText("Numero del responsable");
+        jLabel20.setText("Número del responsable");
 
         txtNumRes.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -300,13 +305,14 @@ public class frontInformes extends javax.swing.JFrame {
 
         jMenu1.setText("Herramientas");
 
-        createClient.setText("Crear cliente");
-        createClient.addMouseListener(new java.awt.event.MouseAdapter() {
+        mCreateClient.setText("Crear cliente");
+        mCreateClient.setToolTipText("");
+        mCreateClient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                createClientMouseClicked(evt);
+                mCreateClientMouseClicked(evt);
             }
         });
-        jMenu1.add(createClient);
+        jMenu1.add(mCreateClient);
 
         jMenuBar1.add(jMenu1);
 
@@ -433,8 +439,7 @@ public class frontInformes extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(42, 42, 42)
                 .addComponent(jLabel18)
                 .addGap(7, 7, 7)
@@ -462,7 +467,7 @@ public class frontInformes extends javax.swing.JFrame {
 
             lblService.setText(service + " : " + "(" + file.length + " archivos adjuntos)");
             this.paneServices.add(lblService);
-            
+
             txtServicio.setText("");
 
         } else {
@@ -632,13 +637,6 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mSaveInformeMouseClicked
 
-    private void createClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createClientMouseClicked
-        // TODO add your handling code here:
-        ClientCreation view = new ClientCreation();
-        view.setVisible(true);
-        this.hide();
-    }//GEN-LAST:event_createClientMouseClicked
-
     private void deleteService() {
         String servicio = txtServicio.getText();
         if (servicio != null) {
@@ -697,6 +695,17 @@ public class frontInformes extends javax.swing.JFrame {
 
         imprimir();
     }//GEN-LAST:event_mDownloadPDFMouseClicked
+
+    private void mCreateClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mCreateClientMouseClicked
+        // TODO add your handling code here:
+        ClientCreation view = new ClientCreation();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_mCreateClientMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      *
@@ -795,7 +804,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPTable innerTable2 = new PdfPTable(1);
             PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
             innerTable2.addCell(number);
-            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACIÓN", normalBoldFont));
             innerTable2.addCell(ubic);
             PdfPCell cell4 = new PdfPCell(innerTable2);
             cell4.setBorder(PdfPCell.NO_BORDER);
@@ -803,9 +812,11 @@ public class frontInformes extends javax.swing.JFrame {
             table.addCell(cell4);
 
             PdfPTable innerTable3 = new PdfPTable(1);
-            PdfPCell numberO = new PdfPCell(new Paragraph(txtNumInforme.getText(), normalFont));
+            PdfPCell numberO = new PdfPCell(new Paragraph(txtNumInforme.getText(), normalBoldFont));
+            numberO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable3.addCell(numberO);
             PdfPCell ubicO = new PdfPCell(new Paragraph(txtUbicacion.getText(), normalFont));
+            ubicO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable3.addCell(ubicO);
             PdfPCell cell5 = new PdfPCell(innerTable3);
             cell5.setBorder(PdfPCell.NO_BORDER);
@@ -817,6 +828,7 @@ public class frontInformes extends javax.swing.JFrame {
             fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable41.addCell(fechai);
             PdfPCell fechaiO = new PdfPCell(new Paragraph(formato.format(dateInicio.getDate()), normalFont));
+            fechaiO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable41.addCell(fechaiO);
             PdfPCell cellfecha = new PdfPCell(innerTable41);
             cellfecha.setBorder(PdfPCell.NO_BORDER);
@@ -827,6 +839,7 @@ public class frontInformes extends javax.swing.JFrame {
             fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable42.addCell(fechaf);
             PdfPCell fechafO = new PdfPCell(new Paragraph(formato.format(dateFin.getDate()), normalFont));
+            fechafO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable42.addCell(fechafO);
             PdfPCell cellfechaf = new PdfPCell(innerTable42);
             cellfechaf.setBorder(PdfPCell.NO_BORDER);
@@ -843,16 +856,17 @@ public class frontInformes extends javax.swing.JFrame {
             table2.setWidthPercentage(100);
             table2.setWidths(new float[]{1, 2});
 
-            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACIÓN DEL TRABAJO", normalBoldFont));
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell7);
             PdfPCell cell8 = new PdfPCell(new Paragraph(txtJustificacion.getText(), normalFont));
+            cell8.setHorizontalAlignment(Element.ALIGN_CENTER);
             table2.addCell(cell8);
 
             PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
             cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell9);
-            PdfPCell cell10 = new PdfPCell(new Paragraph(txtActividades.getText(), normalFont));
+            PdfPCell cell10 = new PdfPCell(new Paragraph(txtActividades.getText(), normalBoldFont));
             cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
             table2.addCell(cell10);
 
@@ -949,7 +963,116 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }
 
+    public void body2PDF(Document document) throws IOException {
+        try {
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            table.setPaddingTop(12);
+            
+            PdfPCell space = new PdfPCell(new Paragraph(" ", normalBoldFont));
+            //space.setPadding(5);
+            space.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(space);
+            
+            PdfPCell title1 = new PdfPCell(new Paragraph("DE MANERA ADICIONAL A LA ENTREGA:", normalBoldFont));
+            table.addCell(title1);
+            
+            PdfPCell space2 = new PdfPCell(new Paragraph(" ", normalBoldFont));
+            table.addCell(space2);
+            
+            PdfPCell title2 = new PdfPCell(new Paragraph("DOCUMENTACIÓN ENTREGADA", normalBoldFont));
+            table.addCell(title2);
+            
+            PdfPCell cot = new PdfPCell(new Paragraph("Cotización", normalFont));
+            table.addCell(cot);
+            
+            PdfPCell arl = new PdfPCell(new Paragraph("Certificado ARL vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(arl);
+            
+            PdfPCell afp = new PdfPCell(new Paragraph("Certificado AFP vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(afp);
+            
+            PdfPCell eps = new PdfPCell(new Paragraph("Certificado EPS vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(eps);
+            
+            PdfPCell ca = new PdfPCell(new Paragraph("Carnet manejo de alturas", normalFont));
+            table.addCell(ca);
+            
+            PdfPCell er = new PdfPCell(new Paragraph("Certificado de existencia y representación legal", normalFont));
+            table.addCell(er);
+            
+            PdfPCell cb = new PdfPCell(new Paragraph("Certificación bancaria", normalFont));
+            table.addCell(cb);
+            
+            PdfPCell factura = new PdfPCell(new Paragraph("Factura", normalFont));
+            table.addCell(factura);
+            
+            PdfPCell title3 = new PdfPCell(new Paragraph("VALIDACIÓN DE VISITA", normalBoldFont));
+            table.addCell(title3);
+            
+            PdfPTable innerTable = new PdfPTable(1);
+            innerTable.setWidthPercentage(100);
+            
+            innerTable.addCell(space);
+            
+            PdfPCell val = new PdfPCell(new Paragraph("Válido la visita correspondiente, del proveedor o contratista FULA CONSTRUCTOR S.A.S., visita que fue bajo mi supervisión, para dar claridad de lo necesitado.", normalFont));
+            val.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(val);
+            
+            innerTable.addCell(space);
+            
+            PdfPCell att = new PdfPCell(new Paragraph("Atentamente:", normalFont));
+            att.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(att);
+            
+            PdfPCell namer = new PdfPCell(new Paragraph("Nombre: " + nameRes, normalFont));
+            namer.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(namer);
+            
+            PdfPCell numr = new PdfPCell(new Paragraph("Telefono: " + numRes, normalFont));
+            numr.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(numr);
+            
+            innerTable.addCell(space);
+            
+            PdfPTable firmas = new PdfPTable(2);
+            firmas.setWidthPercentage(100);
+            
+            PdfPCell firmaR = new PdfPCell(new Paragraph(" ", normalFont));
+            firmas.addCell(firmaR);
+            
+                        
+            com.itextpdf.text.Image firmaImg = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/firma.png");  // Cambia la ruta por tu imagen
+            firmaImg.scaleToFit(100, 50);
+            PdfPCell cell1 = new PdfPCell(firmaImg);
+            cell1.setHorizontalAlignment(Element.ALIGN_CENTER);  // Centrar la imagen en la celda
+            cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            firmas.addCell(cell1);
+            
+            PdfPCell firmaRN = new PdfPCell(new Paragraph("FIRMA RECIBIDO", normalFont));
+            firmaRN.setHorizontalAlignment(Element.ALIGN_CENTER); 
+            firmas.addCell(firmaRN);
+            
+            PdfPCell firmaGN = new PdfPCell(new Paragraph("HEYESMID FULA MONTENEGRO\nGERENTE", normalFont));
+            firmaGN.setHorizontalAlignment(Element.ALIGN_CENTER); 
+            firmas.addCell(firmaGN);
+            
+            PdfPCell cfirmas = new PdfPCell(firmas);
+            innerTable.addCell(cfirmas);
+            
+            PdfPCell validate = new PdfPCell(innerTable);
+            table.addCell(validate);
+            
+            document.add(table);
+        } catch (DocumentException ex) {
+            Logger.getLogger(frontInformes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void imprimir() {
+        
+        setInfo();
+        
         File file = selectSaveLocation();
         if (file == null) {
             return;  // Salir si no se seleccionó ubicación para guardar el archivo
@@ -981,7 +1104,9 @@ public class frontInformes extends javax.swing.JFrame {
                 // Agregar una nueva página después de cada servicio si es necesario
                 document.newPage();
             }
-
+            
+            headerPDF(document);
+            body2PDF(document);
             // Cerrar el documento
             document.close();
 
@@ -1057,7 +1182,6 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxCliente;
-    private javax.swing.JMenuItem createClient;
     private com.toedter.calendar.JDateChooser dateFin;
     private com.toedter.calendar.JDateChooser dateInicio;
     private javax.swing.JLabel imgLogo;
@@ -1083,6 +1207,7 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblToday;
+    private javax.swing.JMenu mCreateClient;
     private javax.swing.JMenu mDownloadPDF;
     private javax.swing.JMenu mNewInforme;
     private javax.swing.JMenu mSaveInforme;

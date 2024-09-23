@@ -20,12 +20,14 @@ public class UsersView extends javax.swing.JFrame {
     private ImageIcon image;
     private Icon icon;
     private String userName;
+    private User user;
     
     /**
      *
      */
     public UsersView() {
         initComponents();
+        user = new User(this.userName);
         this.setResizable(false);
     }
 
@@ -35,6 +37,7 @@ public class UsersView extends javax.swing.JFrame {
      */
     public UsersView(String UserName) {
         this.userName = UserName;
+        
         initComponents();
         this.setResizable(false);
         this.setLogo(imgLogo, "src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/Recurso 2.png");

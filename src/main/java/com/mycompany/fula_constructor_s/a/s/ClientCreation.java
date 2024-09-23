@@ -55,7 +55,7 @@ public class ClientCreation extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel6.setText("Identificacion:");
+        jLabel6.setText("Identificación:");
         jPanel1.add(jLabel6);
 
         clientIdTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -73,7 +73,7 @@ public class ClientCreation extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel4.setText("Direccion:");
+        jLabel4.setText("Dirección:");
         jPanel1.add(jLabel4);
 
         clientDirectionTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -82,7 +82,7 @@ public class ClientCreation extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel5.setText("Correo electronico:");
+        jLabel5.setText("Correo electrónico:");
         jPanel1.add(jLabel5);
 
         clientEmailTxt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -213,7 +213,7 @@ public class ClientCreation extends javax.swing.JFrame {
 
                     // separating name and number.
                     if (lineSplit[0].equals(id)) {
-                        JOptionPane.showMessageDialog(null, "Ya hay un cliente registrado con esta identificacion.");
+                        JOptionPane.showMessageDialog(null, "Ya hay un cliente registrado con esta identificación.");
                         clientExists = true;
                         break;
                     }

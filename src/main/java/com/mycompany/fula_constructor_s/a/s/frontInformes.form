@@ -252,7 +252,6 @@
                           <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtActividades" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
@@ -322,7 +321,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Informe de obra numero:"/>
+        <Property name="text" type="java.lang.String" value="Informe de obra n&#xfa;mero:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNumInforme">
@@ -351,7 +350,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Fecha de finalizacion"/>
+        <Property name="text" type="java.lang.String" value="Fecha de finalizaci&#xf3;n"/>
       </Properties>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="dateFin">
@@ -370,7 +369,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ubicacion de la obra"/>
+        <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n de la obra"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtUbicacion">
@@ -446,7 +445,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Descripcion de la actividad"/>
+        <Property name="text" type="java.lang.String" value="Descripci&#xf3;n de la actividad"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtServicio">
@@ -485,7 +484,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="34" green="11" red="96" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Enviar para aprobacion"/>
+            <Property name="text" type="java.lang.String" value="Enviar para aprobaci&#xf3;n"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder roundedCorners="true" thickness="2">
@@ -494,6 +493,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -523,7 +525,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Justificacion de la obra"/>
+        <Property name="text" type="java.lang.String" value="Justificaci&#xf3;n de la obra"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNameRes">
@@ -541,7 +543,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="34" green="11" red="96" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Numero del responsable"/>
+        <Property name="text" type="java.lang.String" value="N&#xfa;mero del responsable"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNumRes">

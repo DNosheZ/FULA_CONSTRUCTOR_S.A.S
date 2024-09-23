@@ -148,7 +148,7 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel11.setText("Informe de obra numero:");
+        jLabel11.setText("Informe de obra número:");
 
         txtNumInforme.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -158,14 +158,14 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel13.setText("Fecha de finalizacion");
+        jLabel13.setText("Fecha de finalización");
 
         dateFin.setForeground(new java.awt.Color(150, 17, 52));
         dateFin.setDateFormatString("dd/MM/yyyy");
 
         jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel14.setText("Ubicacion de la obra");
+        jLabel14.setText("Ubicación de la obra");
 
         txtUbicacion.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -190,7 +190,7 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel18.setText("Descripcion de la actividad");
+        jLabel18.setText("Descripción de la actividad");
 
         txtServicio.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -201,8 +201,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(255, 254, 255));
         jButton3.setForeground(new java.awt.Color(150, 17, 52));
-        jButton3.setText("Enviar para aprobacion");
+        jButton3.setText("Enviar para aprobación");
         jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
 
         cbxCliente.setBackground(new java.awt.Color(255, 254, 255));
@@ -211,13 +216,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel19.setText("Justificacion de la obra");
+        jLabel19.setText("Justificación de la obra");
 
         txtNameRes.setForeground(new java.awt.Color(150, 17, 52));
 
         jLabel20.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(150, 17, 52));
-        jLabel20.setText("Numero del responsable");
+        jLabel20.setText("Número del responsable");
 
         txtNumRes.setForeground(new java.awt.Color(150, 17, 52));
 
@@ -434,8 +439,7 @@ public class frontInformes extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15)
-                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtActividades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(42, 42, 42)
                 .addComponent(jLabel18)
                 .addGap(7, 7, 7)
@@ -699,6 +703,10 @@ public class frontInformes extends javax.swing.JFrame {
         this.hide();
     }//GEN-LAST:event_mCreateClientMouseClicked
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      *
      * @param workDirection
@@ -796,7 +804,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPTable innerTable2 = new PdfPTable(1);
             PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
             innerTable2.addCell(number);
-            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACIÓN", normalBoldFont));
             innerTable2.addCell(ubic);
             PdfPCell cell4 = new PdfPCell(innerTable2);
             cell4.setBorder(PdfPCell.NO_BORDER);
@@ -848,7 +856,7 @@ public class frontInformes extends javax.swing.JFrame {
             table2.setWidthPercentage(100);
             table2.setWidths(new float[]{1, 2});
 
-            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACIÓN DEL TRABAJO", normalBoldFont));
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell7);
             PdfPCell cell8 = new PdfPCell(new Paragraph(txtJustificacion.getText(), normalFont));
@@ -972,7 +980,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPCell space2 = new PdfPCell(new Paragraph(" ", normalBoldFont));
             table.addCell(space2);
             
-            PdfPCell title2 = new PdfPCell(new Paragraph("DOCUMENTCION ENTREGADA", normalBoldFont));
+            PdfPCell title2 = new PdfPCell(new Paragraph("DOCUMENTACIÓN ENTREGADA", normalBoldFont));
             table.addCell(title2);
             
             PdfPCell cot = new PdfPCell(new Paragraph("Cotización", normalFont));
@@ -999,7 +1007,7 @@ public class frontInformes extends javax.swing.JFrame {
             PdfPCell factura = new PdfPCell(new Paragraph("Factura", normalFont));
             table.addCell(factura);
             
-            PdfPCell title3 = new PdfPCell(new Paragraph("VALIDACION DE VISITA", normalBoldFont));
+            PdfPCell title3 = new PdfPCell(new Paragraph("VALIDACIÓN DE VISITA", normalBoldFont));
             table.addCell(title3);
             
             PdfPTable innerTable = new PdfPTable(1);

@@ -222,7 +222,7 @@ public class CreatePDFExample {
             PdfPTable innerTable2 = new PdfPTable(1);
             PdfPCell number = new PdfPCell(new Paragraph("ORDEN DE OBRA No", normalBoldFont));
             innerTable2.addCell(number);
-            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACION", normalBoldFont));
+            PdfPCell ubic = new PdfPCell(new Paragraph("UBICACIÓN", normalBoldFont));
             innerTable2.addCell(ubic);
             PdfPCell cell4 = new PdfPCell(innerTable2);
             cell4.setBorder(PdfPCell.NO_BORDER);
@@ -270,7 +270,7 @@ public class CreatePDFExample {
             table2.setWidthPercentage(100);
             table2.setWidths(new float[]{1, 2});
 
-            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACION DEL TRABAJO", normalBoldFont));
+            PdfPCell cell7 = new PdfPCell(new Paragraph("JUSTIFICACIÓN DEL TRABAJO", normalBoldFont));
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell7);
             PdfPCell cell8 = new PdfPCell(new Paragraph("", normalFont));

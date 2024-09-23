@@ -462,6 +462,8 @@ public class frontInformes extends javax.swing.JFrame {
 
             lblService.setText(service + " : " + "(" + file.length + " archivos adjuntos)");
             this.paneServices.add(lblService);
+            
+            txtServicio.setText("");
 
         } else {
             JOptionPane.showMessageDialog(null, "EL servicio ya existe o esta vacio");
@@ -650,12 +652,12 @@ public class frontInformes extends javax.swing.JFrame {
 
     private void updatePane() {
         this.paneServices.removeAll();
-        
+
         for (Map.Entry<String, File[]> entry : servicios.entrySet()) {
             JLabel lblService = new JLabel();
             String servicioPrestado = entry.getKey();
             File[] selectedFiles = entry.getValue();
-            
+
             lblService.setText(servicioPrestado + " : " + "(" + selectedFiles.length + " archivos adjuntos)");
             this.paneServices.add(lblService);
         }
@@ -861,7 +863,7 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }
 
-    public void body1PDF(Document document, String servicioPrestado, File[] selectedFiles) {
+    public void body1PDF(Document document, String servicioPrestado, File[] selectedFiles, int ref) {
         PdfPTable tablename = new PdfPTable(1);
         tablename.setWidthPercentage(100);
         tablename.setPaddingTop(12);
@@ -877,7 +879,7 @@ public class frontInformes extends javax.swing.JFrame {
         PdfPTable tablenam = new PdfPTable(1);
 
         // Create the cell with the service name
-        PdfPCell nameserv = new PdfPCell(new Paragraph("1. " + servicioPrestado, normalBoldFont));
+        PdfPCell nameserv = new PdfPCell(new Paragraph(ref + ". " + servicioPrestado, normalBoldFont));
         nameserv.setHorizontalAlignment(Element.ALIGN_CENTER);
         nameserv.setBackgroundColor(BaseColor.LIGHT_GRAY);
 
@@ -963,6 +965,8 @@ public class frontInformes extends javax.swing.JFrame {
             // Abrir el documento
             document.open();
 
+            int c = 1;
+
             for (Map.Entry<String, File[]> entry : servicios.entrySet()) {
                 // Obtener el servicio y los archivos
                 String servicioPrestado = entry.getKey();
@@ -971,7 +975,8 @@ public class frontInformes extends javax.swing.JFrame {
                 headerPDF(document);
 
                 // Llamar a la función que crea el cuerpo para cada servicio
-                body1PDF(document, servicioPrestado, selectedFiles);
+                body1PDF(document, servicioPrestado, selectedFiles, c);
+                c += 1;
 
                 // Agregar una nueva página después de cada servicio si es necesario
                 document.newPage();

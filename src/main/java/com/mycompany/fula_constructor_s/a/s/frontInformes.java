@@ -128,7 +128,7 @@ public class frontInformes extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
-        createClient = new javax.swing.JMenuItem();
+        mCreateClient = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,13 +300,14 @@ public class frontInformes extends javax.swing.JFrame {
 
         jMenu1.setText("Herramientas");
 
-        createClient.setText("Crear cliente");
-        createClient.addMouseListener(new java.awt.event.MouseAdapter() {
+        mCreateClient.setText("Crear cliente");
+        mCreateClient.setToolTipText("");
+        mCreateClient.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                createClientMouseClicked(evt);
+                mCreateClientMouseClicked(evt);
             }
         });
-        jMenu1.add(createClient);
+        jMenu1.add(mCreateClient);
 
         jMenuBar1.add(jMenu1);
 
@@ -632,13 +633,6 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mSaveInformeMouseClicked
 
-    private void createClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createClientMouseClicked
-        // TODO add your handling code here:
-        ClientCreation view = new ClientCreation();
-        view.setVisible(true);
-        this.hide();
-    }//GEN-LAST:event_createClientMouseClicked
-
     private void deleteService() {
         String servicio = txtServicio.getText();
         if (servicio != null) {
@@ -697,6 +691,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         imprimir();
     }//GEN-LAST:event_mDownloadPDFMouseClicked
+
+    private void mCreateClientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mCreateClientMouseClicked
+        // TODO add your handling code here:
+        ClientCreation view = new ClientCreation();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_mCreateClientMouseClicked
 
     /**
      *
@@ -1173,7 +1174,6 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxCliente;
-    private javax.swing.JMenuItem createClient;
     private com.toedter.calendar.JDateChooser dateFin;
     private com.toedter.calendar.JDateChooser dateInicio;
     private javax.swing.JLabel imgLogo;
@@ -1199,6 +1199,7 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblToday;
+    private javax.swing.JMenu mCreateClient;
     private javax.swing.JMenu mDownloadPDF;
     private javax.swing.JMenu mNewInforme;
     private javax.swing.JMenu mSaveInforme;

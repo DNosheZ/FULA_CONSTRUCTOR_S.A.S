@@ -73,6 +73,7 @@ public class front extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(150, 17, 52));
         jPanel1.add(jSeparator1);
 
+        bttnLogin.setBackground(new java.awt.Color(255, 254, 255));
         bttnLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         bttnLogin.setForeground(new java.awt.Color(150, 17, 52));
         bttnLogin.setText("Ingresa");

@@ -60,14 +60,15 @@
             <Property name="text" type="java.lang.String" value="Herramientas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="createClient">
+            <Menu class="javax.swing.JMenu" name="mCreateClient">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear cliente"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="createClientMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mCreateClientMouseClicked"/>
               </Events>
-            </MenuItem>
+            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>

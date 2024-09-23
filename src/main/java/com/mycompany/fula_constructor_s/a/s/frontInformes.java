@@ -803,9 +803,11 @@ public class frontInformes extends javax.swing.JFrame {
             table.addCell(cell4);
 
             PdfPTable innerTable3 = new PdfPTable(1);
-            PdfPCell numberO = new PdfPCell(new Paragraph(txtNumInforme.getText(), normalFont));
+            PdfPCell numberO = new PdfPCell(new Paragraph(txtNumInforme.getText(), normalBoldFont));
+            numberO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable3.addCell(numberO);
             PdfPCell ubicO = new PdfPCell(new Paragraph(txtUbicacion.getText(), normalFont));
+            ubicO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable3.addCell(ubicO);
             PdfPCell cell5 = new PdfPCell(innerTable3);
             cell5.setBorder(PdfPCell.NO_BORDER);
@@ -817,6 +819,7 @@ public class frontInformes extends javax.swing.JFrame {
             fechai.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable41.addCell(fechai);
             PdfPCell fechaiO = new PdfPCell(new Paragraph(formato.format(dateInicio.getDate()), normalFont));
+            fechaiO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable41.addCell(fechaiO);
             PdfPCell cellfecha = new PdfPCell(innerTable41);
             cellfecha.setBorder(PdfPCell.NO_BORDER);
@@ -827,6 +830,7 @@ public class frontInformes extends javax.swing.JFrame {
             fechaf.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innerTable42.addCell(fechaf);
             PdfPCell fechafO = new PdfPCell(new Paragraph(formato.format(dateFin.getDate()), normalFont));
+            fechafO.setHorizontalAlignment(Element.ALIGN_CENTER);
             innerTable42.addCell(fechafO);
             PdfPCell cellfechaf = new PdfPCell(innerTable42);
             cellfechaf.setBorder(PdfPCell.NO_BORDER);
@@ -847,12 +851,13 @@ public class frontInformes extends javax.swing.JFrame {
             cell7.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell7);
             PdfPCell cell8 = new PdfPCell(new Paragraph(txtJustificacion.getText(), normalFont));
+            cell8.setHorizontalAlignment(Element.ALIGN_CENTER);
             table2.addCell(cell8);
 
             PdfPCell cell9 = new PdfPCell(new Paragraph("ACTIVIDADES", normalBoldFont));
             cell9.setBackgroundColor(BaseColor.LIGHT_GRAY);
             table2.addCell(cell9);
-            PdfPCell cell10 = new PdfPCell(new Paragraph(txtActividades.getText(), normalFont));
+            PdfPCell cell10 = new PdfPCell(new Paragraph(txtActividades.getText(), normalBoldFont));
             cell10.setHorizontalAlignment(Element.ALIGN_CENTER);
             table2.addCell(cell10);
 
@@ -949,7 +954,7 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }
 
-    public void body2PDF(Document document) {
+    public void body2PDF(Document document) throws IOException {
         try {
             PdfPTable table = new PdfPTable(1);
             table.setWidthPercentage(100);
@@ -1019,19 +1024,28 @@ public class frontInformes extends javax.swing.JFrame {
             numr.setBorder(PdfPCell.NO_BORDER);
             innerTable.addCell(numr);
             
+            innerTable.addCell(space);
+            
             PdfPTable firmas = new PdfPTable(2);
             firmas.setWidthPercentage(100);
             
             PdfPCell firmaR = new PdfPCell(new Paragraph(" ", normalFont));
             firmas.addCell(firmaR);
             
-            PdfPCell firmaG = new PdfPCell(new Paragraph(" ", normalFont));
-            firmas.addCell(firmaG);
+                        
+            com.itextpdf.text.Image firmaImg = com.itextpdf.text.Image.getInstance("src\\main\\java\\com\\mycompany\\fula_constructor_s\\a\\s\\img/firma.png");  // Cambia la ruta por tu imagen
+            firmaImg.scaleToFit(100, 50);
+            PdfPCell cell1 = new PdfPCell(firmaImg);
+            cell1.setHorizontalAlignment(Element.ALIGN_CENTER);  // Centrar la imagen en la celda
+            cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            firmas.addCell(cell1);
             
             PdfPCell firmaRN = new PdfPCell(new Paragraph("FIRMA RECIBIDO", normalFont));
+            firmaRN.setHorizontalAlignment(Element.ALIGN_CENTER); 
             firmas.addCell(firmaRN);
             
             PdfPCell firmaGN = new PdfPCell(new Paragraph("HEYESMID FULA MONTENEGRO\nGERENTE", normalFont));
+            firmaGN.setHorizontalAlignment(Element.ALIGN_CENTER); 
             firmas.addCell(firmaGN);
             
             PdfPCell cfirmas = new PdfPCell(firmas);
@@ -1047,6 +1061,9 @@ public class frontInformes extends javax.swing.JFrame {
     }
 
     public void imprimir() {
+        
+        setInfo();
+        
         File file = selectSaveLocation();
         if (file == null) {
             return;  // Salir si no se seleccionó ubicación para guardar el archivo
@@ -1079,6 +1096,7 @@ public class frontInformes extends javax.swing.JFrame {
                 document.newPage();
             }
             
+            headerPDF(document);
             body2PDF(document);
             // Cerrar el documento
             document.close();

@@ -138,6 +138,8 @@ public class front extends javax.swing.JFrame {
                     admin.setVisible(true);
                     this.hide();
                 }else{
+                    
+                    
                     UsersView user = new UsersView(userId);
                     user.setVisible(true);
                     this.hide();

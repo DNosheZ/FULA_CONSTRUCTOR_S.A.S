@@ -462,7 +462,7 @@ public class frontInformes extends javax.swing.JFrame {
 
             lblService.setText(service + " : " + "(" + file.length + " archivos adjuntos)");
             this.paneServices.add(lblService);
-            
+
             txtServicio.setText("");
 
         } else {
@@ -949,6 +949,103 @@ public class frontInformes extends javax.swing.JFrame {
         }
     }
 
+    public void body2PDF(Document document) {
+        try {
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            table.setPaddingTop(12);
+            
+            PdfPCell space = new PdfPCell(new Paragraph(" ", normalBoldFont));
+            //space.setPadding(5);
+            space.setBorder(PdfPCell.NO_BORDER);
+            table.addCell(space);
+            
+            PdfPCell title1 = new PdfPCell(new Paragraph("DE MANERA ADICIONAL A LA ENTREGA:", normalBoldFont));
+            table.addCell(title1);
+            
+            PdfPCell space2 = new PdfPCell(new Paragraph(" ", normalBoldFont));
+            table.addCell(space2);
+            
+            PdfPCell title2 = new PdfPCell(new Paragraph("DOCUMENTCION ENTREGADA", normalBoldFont));
+            table.addCell(title2);
+            
+            PdfPCell cot = new PdfPCell(new Paragraph("Cotización", normalFont));
+            table.addCell(cot);
+            
+            PdfPCell arl = new PdfPCell(new Paragraph("Certificado ARL vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(arl);
+            
+            PdfPCell afp = new PdfPCell(new Paragraph("Certificado AFP vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(afp);
+            
+            PdfPCell eps = new PdfPCell(new Paragraph("Certificado EPS vigente titular y subcontratistas y/o dependientes", normalFont));
+            table.addCell(eps);
+            
+            PdfPCell ca = new PdfPCell(new Paragraph("Carnet manejo de alturas", normalFont));
+            table.addCell(ca);
+            
+            PdfPCell er = new PdfPCell(new Paragraph("Certificado de existencia y representación legal", normalFont));
+            table.addCell(er);
+            
+            PdfPCell cb = new PdfPCell(new Paragraph("Certificación bancaria", normalFont));
+            table.addCell(cb);
+            
+            PdfPCell factura = new PdfPCell(new Paragraph("Factura", normalFont));
+            table.addCell(factura);
+            
+            PdfPCell title3 = new PdfPCell(new Paragraph("VALIDACION DE VISITA", normalBoldFont));
+            table.addCell(title3);
+            
+            PdfPTable innerTable = new PdfPTable(1);
+            innerTable.setWidthPercentage(100);
+            
+            innerTable.addCell(space);
+            
+            PdfPCell val = new PdfPCell(new Paragraph("Válido la visita correspondiente, del proveedor o contratista FULA CONSTRUCTOR S.A.S., visita que fue bajo mi supervisión, para dar claridad de lo necesitado.", normalFont));
+            val.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(val);
+            
+            innerTable.addCell(space);
+            
+            PdfPCell att = new PdfPCell(new Paragraph("Atentamente:", normalFont));
+            att.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(att);
+            
+            PdfPCell namer = new PdfPCell(new Paragraph("Nombre: " + nameRes, normalFont));
+            namer.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(namer);
+            
+            PdfPCell numr = new PdfPCell(new Paragraph("Telefono: " + numRes, normalFont));
+            numr.setBorder(PdfPCell.NO_BORDER);
+            innerTable.addCell(numr);
+            
+            PdfPTable firmas = new PdfPTable(2);
+            firmas.setWidthPercentage(100);
+            
+            PdfPCell firmaR = new PdfPCell(new Paragraph(" ", normalFont));
+            firmas.addCell(firmaR);
+            
+            PdfPCell firmaG = new PdfPCell(new Paragraph(" ", normalFont));
+            firmas.addCell(firmaG);
+            
+            PdfPCell firmaRN = new PdfPCell(new Paragraph("FIRMA RECIBIDO", normalFont));
+            firmas.addCell(firmaRN);
+            
+            PdfPCell firmaGN = new PdfPCell(new Paragraph("HEYESMID FULA MONTENEGRO\nGERENTE", normalFont));
+            firmas.addCell(firmaGN);
+            
+            PdfPCell cfirmas = new PdfPCell(firmas);
+            innerTable.addCell(cfirmas);
+            
+            PdfPCell validate = new PdfPCell(innerTable);
+            table.addCell(validate);
+            
+            document.add(table);
+        } catch (DocumentException ex) {
+            Logger.getLogger(frontInformes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void imprimir() {
         File file = selectSaveLocation();
         if (file == null) {
@@ -981,7 +1078,8 @@ public class frontInformes extends javax.swing.JFrame {
                 // Agregar una nueva página después de cada servicio si es necesario
                 document.newPage();
             }
-
+            
+            body2PDF(document);
             // Cerrar el documento
             document.close();
 

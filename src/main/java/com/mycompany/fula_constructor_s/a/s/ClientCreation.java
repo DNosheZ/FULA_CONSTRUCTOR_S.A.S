@@ -45,7 +45,6 @@ public class ClientCreation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         createClientBttn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuBack = new javax.swing.JMenu();
 
@@ -107,13 +106,6 @@ public class ClientCreation extends javax.swing.JFrame {
             }
         });
         jPanel2.add(createClientBttn);
-
-        jButton1.setBackground(new java.awt.Color(255, 254, 255));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(150, 17, 52));
-        jButton1.setText("Buscar");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(150, 17, 52), 2, true));
-        jPanel2.add(jButton1);
 
         menuBack.setText("Salir");
         menuBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,7 +287,6 @@ public class ClientCreation extends javax.swing.JFrame {
     private javax.swing.JTextField clientIdTxt;
     private javax.swing.JTextField clientSocialReasonTxt;
     private javax.swing.JButton createClientBttn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

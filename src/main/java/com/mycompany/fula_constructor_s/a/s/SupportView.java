@@ -195,7 +195,7 @@ public class SupportView extends javax.swing.JFrame {
         });
     }
     
-    public static void transfer_to_email(String correo, String asunto, String body){
+    public void transfer_to_email(String correo, String asunto, String body){
         String sendEmail = "dfula@unal.edu.co";
         String password = "smvl nffc ugwt jsuc";
         String message = body;

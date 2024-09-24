@@ -128,7 +128,7 @@ public class frontInformes extends javax.swing.JFrame {
         mSaveInforme = new javax.swing.JMenu();
         mDownloadPDF = new javax.swing.JMenu();
         mPreview = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
+        mSendEmail = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         mCreateClient = new javax.swing.JMenu();
 
@@ -294,8 +294,13 @@ public class frontInformes extends javax.swing.JFrame {
         });
         menuArchivo.add(mPreview);
 
-        jMenu5.setText("Enviar informe por e-mail");
-        menuArchivo.add(jMenu5);
+        mSendEmail.setText("Enviar informe por e-mail");
+        mSendEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mSendEmailMouseClicked(evt);
+            }
+        });
+        menuArchivo.add(mSendEmail);
 
         jMenuBar1.add(menuArchivo);
 
@@ -721,7 +726,7 @@ public class frontInformes extends javax.swing.JFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         updateService();
-        
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void mNewInformeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mNewInformeMouseClicked
@@ -796,7 +801,6 @@ public class frontInformes extends javax.swing.JFrame {
             imprimir(file);
             PDDocument document = PDDocument.load(file);
 
-
             // Mostrar el PDF en una ventana
             mostrarPdfEnVentana(document);
 
@@ -805,6 +809,16 @@ public class frontInformes extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_mPreviewMouseClicked
+
+    private void mSendEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mSendEmailMouseClicked
+        // TODO add your handling code here:
+        File file = new File("temp/informe.pdf");
+        imprimir(file);
+        
+        SendInformeView view = new SendInformeView();
+        view.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_mSendEmailMouseClicked
 
     /**
      *
@@ -1297,7 +1311,6 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
@@ -1307,6 +1320,7 @@ public class frontInformes extends javax.swing.JFrame {
     private javax.swing.JMenu mNewInforme;
     private javax.swing.JMenu mPreview;
     private javax.swing.JMenu mSaveInforme;
+    private javax.swing.JMenu mSendEmail;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JPanel paneActivitys1;
     private javax.swing.JScrollPane paneScroll;

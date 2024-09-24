@@ -76,6 +76,7 @@ public class SendInformeView extends javax.swing.JFrame {
 
             MimeBodyPart mInforme = new MimeBodyPart();
             mInforme.setDataHandler(new DataHandler(new FileDataSource("temp/informe.pdf")));
+            mInforme.setFileName("informe.pdf");
             mElementos.addBodyPart(mInforme);
 
             mail.setFrom(new InternetAddress(sendEmail));

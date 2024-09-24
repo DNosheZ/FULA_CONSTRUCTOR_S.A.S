@@ -635,8 +635,9 @@ public class frontInformes extends javax.swing.JFrame {
         String servicio = txtServicio.getText();
         if (servicio != null && !servicio.isEmpty()) {
             servicios.remove(servicio);
+            //JOptionPane.showMessageDialog(null, "Servicio eliminado.");
             updatePane(); // Actualizamos la lista visual
-            JOptionPane.showMessageDialog(null, "Servicio eliminado.");
+            txtServicio.setText("");
         } else {
             JOptionPane.showMessageDialog(null, "El campo esta vacio.");
         }
@@ -648,13 +649,13 @@ public class frontInformes extends javax.swing.JFrame {
 
         if (!servicio.isEmpty()) {
             // Opciones a mostrar
-            String[] opciones = {"Cambiar Nombre", "Cambiar Descripción", "Cancelar"};
+            String[] opciones = {"Cambiar Nombre", "Cambiar Evidencias", "Cancelar"};
 
             // Mostrar el OptionDialog
             int seleccion = JOptionPane.showOptionDialog(
                     null,
                     "Seleccione una opción:",
-                    "Opciones de Servicio",
+                    "Opciones para actualizar",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.PLAIN_MESSAGE,
                     null,
@@ -666,7 +667,7 @@ public class frontInformes extends javax.swing.JFrame {
             switch (seleccion) {
                 case 0 -> {
                     // Cambiar Nombre
-                    String newServ = JOptionPane.showInputDialog(null, "Ingrese un valor:", "Entrada de valor", JOptionPane.PLAIN_MESSAGE);
+                    String newServ = JOptionPane.showInputDialog(null, "Ingrese un nuevo nombre para el servicio:", "Cambio de nombre", JOptionPane.PLAIN_MESSAGE);
                     if (!newServ.isEmpty()) {
                         servicios.put(newServ, servicios.get(servicio)); // Añadimos el actualizado
                         servicios.remove(servicio);  // Eliminamos el anterior
@@ -682,6 +683,7 @@ public class frontInformes extends javax.swing.JFrame {
                     servicios.remove(servicio);
                     addService(servicio);
                     updatePane();
+                    txtServicio.setText("");
                 }
 
                 case 2 -> // Cancelar
@@ -713,11 +715,13 @@ public class frontInformes extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         deleteService();
+        updatePane();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
         updateService();
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void mNewInformeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mNewInformeMouseClicked

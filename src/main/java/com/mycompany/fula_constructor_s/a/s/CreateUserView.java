@@ -77,6 +77,7 @@ public class CreateUserView extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
+        btnCreateUser.setBackground(new java.awt.Color(255, 254, 255));
         btnCreateUser.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnCreateUser.setForeground(new java.awt.Color(150, 17, 52));
         btnCreateUser.setText("Crear");
@@ -87,6 +88,7 @@ public class CreateUserView extends javax.swing.JFrame {
         });
         jPanel2.add(btnCreateUser);
 
+        jButton2.setBackground(new java.awt.Color(255, 254, 255));
         jButton2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(150, 17, 52));
         jButton2.setText("Buscar");
